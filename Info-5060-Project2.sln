@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31105.61
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Info-5060-Project2-Client", "Info-5060-Project2-Client\Info-5060-Project2-Client.csproj", "{22152E48-D059-418D-99EF-EA4818AC8841}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortuneWheel", "FortuneWheel\FortuneWheel.csproj", "{D0A8F394-DD53-4968-A762-FB7447CF5AD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{22152E48-D059-418D-99EF-EA4818AC8841}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22152E48-D059-418D-99EF-EA4818AC8841}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22152E48-D059-418D-99EF-EA4818AC8841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0A8F394-DD53-4968-A762-FB7447CF5AD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A8F394-DD53-4968-A762-FB7447CF5AD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A8F394-DD53-4968-A762-FB7447CF5AD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A8F394-DD53-4968-A762-FB7447CF5AD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
