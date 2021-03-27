@@ -33,7 +33,6 @@ namespace FortuneWheel
             wheelStates.AddLast(Image.FromFile("../../../wheel/Slot 6 active.png"));
             wheelStates.AddLast(Image.FromFile("../../../wheel/Slot 7 active.png"));
             wheelStates.AddLast(Image.FromFile("../../../wheel/Slot 8 active.png"));
-            //wheelSound = new SoundPlayer(@"../../../wheel/wheelSound.wav");
             wheelSound = new SoundPlayer(@"../../../wheel/singlePeg.wav");
 
             prizeValues = new List<string>
