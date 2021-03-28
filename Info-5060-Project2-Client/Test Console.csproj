@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FortuneWheelLibrary\FortuneWheelLibrary.csproj">
+      <Project>{B99BCB8A-C124-4795-AC86-2D3C492A77DF}</Project>
+      <Name>FortuneWheelLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
