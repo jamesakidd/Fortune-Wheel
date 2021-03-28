@@ -40,7 +40,7 @@ namespace FortuneWheelClient
                 this.BeginInvoke(new GuiUpdateDelegate(SendAllMessages), new object[] { messages });
         }
 
-        private void button_Submit_Click(object sender, EventArgs e)
+        private void button_join_Click(object sender, EventArgs e)
         {
             try
             {

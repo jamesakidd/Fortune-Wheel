@@ -9,8 +9,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-
+using System.Windows.Threading; 
 
 namespace FortuneWheel
 {
@@ -23,9 +22,22 @@ namespace FortuneWheel
             InitializeComponent();
         }
 
-        public void SendAllMessages(string[] messages)
+        private delegate void GuiUpdateDelegate(Player[] messages);
+        public void SendAllMessages(Player[] messages)
         {
-            throw new NotImplementedException();
+            if (Dispatcher.CurrentDispatcher.Thread == System.Threading.Thread.CurrentThread)
+            {
+                try
+                {
+                    listBox_Players.DataSource = messages;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+                this.BeginInvoke(new GuiUpdateDelegate(SendAllMessages), new object[] { messages });
         }
 
         private void button_join_Click(object sender, EventArgs e)
