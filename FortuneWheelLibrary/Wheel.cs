@@ -131,5 +131,10 @@ namespace FortuneWheelLibrary
 
             Players[0].Score += CurrentPrize * count; //HARDCODED FOR TESTING
         }
+
+        public bool GuessAnswer(string playerGuess)
+        {
+            return string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+        }
     }
 }

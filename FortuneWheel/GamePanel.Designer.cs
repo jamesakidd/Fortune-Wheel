@@ -64,7 +64,7 @@ namespace FortuneWheel
             this.lbl_Player2 = new System.Windows.Forms.Label();
             this.lbl_Player4 = new System.Windows.Forms.Label();
             this.lbl_Player3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_answer = new System.Windows.Forms.Button();
             this.lbl_Player1Score = new System.Windows.Forms.Label();
             this.lbl_Player2Score = new System.Windows.Forms.Label();
             this.lbl_Player3Score = new System.Windows.Forms.Label();
@@ -483,17 +483,18 @@ namespace FortuneWheel
             this.lbl_Player3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.lbl_Player3.Visible = false;
             // 
-            // button1
+            // btn_answer
             // 
-            this.button1.BackColor = System.Drawing.Color.Gold;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("Bernard MT Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(350, 758);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(176, 95);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "GUESS ANSWER";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btn_answer.BackColor = System.Drawing.Color.Gold;
+            this.btn_answer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_answer.Font = new System.Drawing.Font("Bernard MT Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_answer.Location = new System.Drawing.Point(350, 758);
+            this.btn_answer.Name = "btn_answer";
+            this.btn_answer.Size = new System.Drawing.Size(176, 95);
+            this.btn_answer.TabIndex = 8;
+            this.btn_answer.Text = "GUESS ANSWER";
+            this.btn_answer.UseVisualStyleBackColor = false;
+            this.btn_answer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btn_answer_MouseClick);
             // 
             // lbl_Player1Score
             // 
@@ -548,7 +549,7 @@ namespace FortuneWheel
             this.Controls.Add(this.lbl_Player3Score);
             this.Controls.Add(this.lbl_Player2Score);
             this.Controls.Add(this.lbl_Player1Score);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_answer);
             this.Controls.Add(this.lbl_Player4);
             this.Controls.Add(this.lbl_Player3);
             this.Controls.Add(this.lbl_Player2);
@@ -602,7 +603,7 @@ namespace FortuneWheel
         private System.Windows.Forms.Label lbl_Player2;
         private System.Windows.Forms.Label lbl_Player4;
         private System.Windows.Forms.Label lbl_Player3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_answer;
         private System.Windows.Forms.Label lbl_Player1Score;
         private System.Windows.Forms.Label lbl_Player2Score;
         private System.Windows.Forms.Label lbl_Player3Score;
