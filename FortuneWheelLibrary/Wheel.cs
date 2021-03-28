@@ -5,11 +5,28 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.ServiceModel;
 
 namespace FortuneWheelLibrary
 {
-    public class Wheel
+    [ServiceContract(CallbackContract = typeof(ICallback))]
+    public interface IWheel
     {
+        [OperationContract]
+        bool AddPlayer(Player player);
+        [OperationContract]
+        void MakeGuess(char c);
+        [OperationContract]
+        bool GuessAnswer(string playerGuess);
+        [OperationContract]
+        Player[] GetAllPlayers();
+    }
+
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public class Wheel : IWheel
+    {
+        private Dictionary<string, ICallback> callbacks = new Dictionary<string, ICallback>();
+        public bool gameStarted { get; set; }
         public List<Player> Players { get; set; }
         public List<int> WheelPrizes { get; set; }
         public Dictionary<string, List<string>> Puzzles { get; set; } //Key: Category Value: A List of possible phrases.
@@ -27,12 +44,13 @@ namespace FortuneWheelLibrary
             Players = new List<Player>();
             Puzzles = new Dictionary<string, List<string>>();
             Letters = new Dictionary<char, bool>();
-
+            gameStarted = false;
+            /*
             LoadWheelPrizes();
             LoadLetters();
             LoadPuzzles();
             PickCurrentPuzzle();
-            SetInitialPuzzleState();
+            SetInitialPuzzleState();*/
         }
 
         private void SetInitialPuzzleState()
@@ -118,9 +136,28 @@ namespace FortuneWheelLibrary
         /// Adds a player to the list of players
         /// </summary>
         /// <param name="player">The player to be added</param>
-        public void AddPlayer(Player player)
+        public bool AddPlayer(Player player)
         {
-            Players.Add(player);
+            if (callbacks.ContainsKey(player.Name.ToUpper()))
+                // User alias must be unique
+                return false;
+            else
+            {
+                Players.Add(player);
+                // Retrieve client's callback proxy
+                ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
+                // Save alias and callback proxy
+                callbacks.Add(player.Name.ToUpper(), cb);
+                updateAllUsers();
+                return true;
+            }
+        }
+
+        private void updateAllUsers()
+        {
+            Player[] msgs = GetAllPlayers();
+            foreach (ICallback cb in callbacks.Values)
+                cb.SendAllMessages(msgs);
         }
 
         public void MakeGuess(char c)
@@ -135,6 +172,11 @@ namespace FortuneWheelLibrary
         public bool GuessAnswer(string playerGuess)
         {
             return string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        public Player[] GetAllPlayers()
+        {
+            return this.Players.ToArray();
         }
     }
 }

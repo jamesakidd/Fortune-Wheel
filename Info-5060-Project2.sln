@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FortuneWheel", "FortuneWhee
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortuneWheelLibrary", "FortuneWheelLibrary\FortuneWheelLibrary.csproj", "{B99BCB8A-C124-4795-AC86-2D3C492A77DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortuneWheelService", "FortuneWheelService\FortuneWheelService.csproj", "{C264DB8E-1E1E-45F8-9C96-1B01D03CA44A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FortuneWheelClient", "FortuneWheelClient\FortuneWheelClient.csproj", "{1586B0AA-3B24-4B18-856F-15AD9DB8BD71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{B99BCB8A-C124-4795-AC86-2D3C492A77DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B99BCB8A-C124-4795-AC86-2D3C492A77DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B99BCB8A-C124-4795-AC86-2D3C492A77DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C264DB8E-1E1E-45F8-9C96-1B01D03CA44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C264DB8E-1E1E-45F8-9C96-1B01D03CA44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C264DB8E-1E1E-45F8-9C96-1B01D03CA44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C264DB8E-1E1E-45F8-9C96-1B01D03CA44A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1586B0AA-3B24-4B18-856F-15AD9DB8BD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1586B0AA-3B24-4B18-856F-15AD9DB8BD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1586B0AA-3B24-4B18-856F-15AD9DB8BD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1586B0AA-3B24-4B18-856F-15AD9DB8BD71}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
