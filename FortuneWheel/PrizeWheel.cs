@@ -13,7 +13,7 @@ namespace FortuneWheel
     public partial class PrizeWheel : Form
     {
         private Wheel wheel = null;
-        private LinkedList<Image> wheelStates = new();
+        private LinkedList<Image> wheelStates = new LinkedList<Image>();
         private SoundPlayer wheelSound;
         private List<string> prizeValues;
         private GamePanel gamePanel;
