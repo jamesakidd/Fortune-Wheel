@@ -16,6 +16,7 @@ namespace FortuneWheel
         private LinkedList<Image> wheelStates = new();
         private SoundPlayer wheelSound;
         private List<string> prizeValues;
+        private GamePanel gamePanel;
 
         public PrizeWheel()
         {
@@ -23,7 +24,8 @@ namespace FortuneWheel
             InitializeComponent();
 
             wheel = new Wheel(); // **************will need to be changed to create a Duplex channel instead ***********************
-
+            wheel.AddPlayer(new Player("Player 1")); // probably move this somewhere else and certainly not hardcode it.
+            wheel.AddPlayer(new Player("Player 2")); // probably move this somewhere else and certainly not hardcode it.
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -57,14 +59,13 @@ namespace FortuneWheel
 
         private void SpinWheel()
         {
-            var rand = new Random();
+            var rand = new Random(DateTime.Now.Millisecond);
             var spins = rand.Next(30,38); 
             double speed = rand.Next(8,15);
             IEnumerator<Image> e = wheelStates.GetEnumerator();
 
             for (int i = 0; i < spins; i++)
             {
-                
                 if (e.MoveNext())
                 {
                     BackgroundImage = e.Current;
@@ -85,13 +86,18 @@ namespace FortuneWheel
                     Thread.Sleep((int)Math.Ceiling(speed *= 1.11));
             }
 
-            wheel.CurrentPrize = wheel.WheelPrizes[(spins % 8)-1];
+            int wheelPosition  = spins % 8;
+            wheel.CurrentPrize = wheelPosition == 0 ? wheel.WheelPrizes[wheelPosition] : wheel.WheelPrizes[wheelPosition - 1]; 
+            Thread.Sleep(1200);
             e.Dispose();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             SpinWheel();
+            gamePanel ??= new GamePanel(wheel);
+            Hide();
+            gamePanel.Show();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -114,11 +120,6 @@ namespace FortuneWheel
             }
         }
 
-
-
-
-
-
         // Draw sideways text in the indicated rectangle.
         private void DrawSidewaysText(Graphics gr, Font font,
             Brush brush, Rectangle bounds, StringFormat string_format,
@@ -139,9 +140,5 @@ namespace FortuneWheel
             // Draw the text.
             gr.DrawString(txt, font, brush, rotated_bounds, string_format);
         }
-
-
-
-
     }
 }

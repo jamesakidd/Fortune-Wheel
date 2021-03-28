@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace FortuneWheelLibrary
@@ -16,6 +17,7 @@ namespace FortuneWheelLibrary
         public int CurrentPrize { get; set; }
         public string CurrentCategory { get; set; }
         public string CurrentPhrase { get; set; }
+        public string PuzzleState { get; set; }
 
 
         private const string PUZZLE_FILE = "./fortuneWheelPuzzles.json";
@@ -30,12 +32,37 @@ namespace FortuneWheelLibrary
             LoadLetters();
             LoadPuzzles();
             PickCurrentPuzzle();
+            SetInitialPuzzleState();
+        }
+
+        private void SetInitialPuzzleState()
+        {
+            char square = Convert.ToChar(254);
+            PuzzleState = new string(CurrentPhrase.Select(c => c == ' ' ? ' ' : '█').ToArray());
+            SetPuzzleState('-');
+            SetPuzzleState('&');
+            SetPuzzleState('\'');
+        }
+
+        private void SetPuzzleState(char c)
+        {
+            StringBuilder sb = new StringBuilder(PuzzleState);
+            string upperCurrentPhrase = CurrentPhrase.ToUpper();
+            for (int i = 0; i < CurrentPhrase.Length; i++)
+            {
+                if (upperCurrentPhrase[i] == c)
+                {
+                    sb[i] = c;
+                }
+            }
+
+            PuzzleState = sb.ToString();
         }
 
         private void LoadWheelPrizes()
         {
             WheelPrizes = new List<int>
-            {
+            {   
                 3500,
                 500,
                 750,
@@ -95,6 +122,14 @@ namespace FortuneWheelLibrary
         {
             Players.Add(player);
         }
-    }
 
+        public void MakeGuess(char c)
+        {
+            int count = CurrentPhrase.ToUpper().Count(f => f == c);
+            if(count > 0)
+                SetPuzzleState(c);
+
+            Players[0].Score += CurrentPrize * count; //HARDCODED FOR TESTING
+        }
+    }
 }
