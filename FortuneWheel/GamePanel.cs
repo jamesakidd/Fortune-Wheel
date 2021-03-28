@@ -72,12 +72,40 @@ namespace FortuneWheel
             wheel.MakeGuess(c);
             lbl_PuzzleDisplay.Text = wheel.PuzzleState;
             UpdatePlayerScores();
+
+
+            //Hide gamepanel form
+            //"SWITCH" players
+            //show prizewheel form
+
+
             Refresh();
         }
 
         private void UpdatePlayerScores() //Will need to be made dynamic for number of players in game.
         {
-            lbl_Player1Score.Text = wheel.Players[0].Score.ToString("C0");
+            for (int i = 0; i < wheel.Players.Count; i++)
+            {
+                playerScoreLabels[i].Text = wheel.Players[i].Score.ToString("C0");
+            }
+        }
+
+        private void btn_answer_MouseClick(object sender, MouseEventArgs e)
+        {
+            using (AnswerDialog answerDiag = new AnswerDialog())
+            {
+                answerDiag.ShowDialog();
+                bool isCorrect = wheel.GuessAnswer(answerDiag.Answer);
+
+                if (isCorrect)
+                {
+                    //show game end dialog
+                }
+                else
+                {
+                    //continue game flow
+                }
+            }
         }
     }
 }
