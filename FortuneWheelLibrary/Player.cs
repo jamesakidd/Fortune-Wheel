@@ -7,6 +7,7 @@ namespace FortuneWheelLibrary
     {
         public string Name { get; set; }
         public int Score { get; set; } = 0;
+        public bool isReady { get; set; } = false;
 
         public Player(string name)
         {

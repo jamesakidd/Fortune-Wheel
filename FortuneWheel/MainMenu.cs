@@ -16,20 +16,31 @@ namespace FortuneWheel
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, UseSynchronizationContext = false)]
     public partial class MainMenu : Form, ICallback
     {
+        private Player User;
         private IWheel wheel = null;
+        private List<Player> players;
+        private List<Label> playerLabels;
         public MainMenu()
         {
+            players = new List<Player>();
             InitializeComponent();
+            playerLabels = new List<Label>();
+            playerLabels.Add(label_Player1);
+            playerLabels.Add(label_Player2);
+            playerLabels.Add(label_Player3);
+            playerLabels.Add(label_Player4);
         }
 
         private delegate void GuiUpdateDelegate(Player[] messages);
         public void SendAllMessages(Player[] messages)
         {
+
             if (Dispatcher.CurrentDispatcher.Thread == System.Threading.Thread.CurrentThread)
             {
                 try
                 {
-                    listBox_Players.DataSource = messages;
+                    players = messages.ToList();
+                    PlayersUpdated();
                 }
                 catch (Exception ex)
                 {
@@ -38,6 +49,19 @@ namespace FortuneWheel
             }
             else
                 this.BeginInvoke(new GuiUpdateDelegate(SendAllMessages), new object[] { messages });
+        }
+
+        private void PlayersUpdated()
+        {
+            for (int i = 0; i <= playerLabels.Count; i++)
+            {
+                if (players.Count <= i)
+                {
+                    break;
+                }
+                string ready = players[i].isReady ? "(ready)" : "(Not Ready)";
+                playerLabels[i].Text = $"{players[i]} {ready}";
+            }
         }
 
         private void button_join_Click(object sender, EventArgs e)
@@ -49,7 +73,9 @@ namespace FortuneWheel
                 Player p = new Player(textBox_UserName.Text);
                 if (wheel.AddPlayer(p))
                 {
-                    listBox_Players.DataSource = wheel.GetAllPlayers();
+                    User = p;
+                    players = wheel.GetAllPlayers().ToList();
+                    PlayersUpdated();
                     button_join.Enabled = false;
                 }
                 else
@@ -63,6 +89,13 @@ namespace FortuneWheel
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void button_Ready_Click(object sender, EventArgs e)
+        {
+            User.isReady = !User.isReady;
+            wheel.UpdatePlayer(User);
+            PlayersUpdated();
         }
     }
 }

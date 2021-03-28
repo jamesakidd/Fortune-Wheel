@@ -20,6 +20,8 @@ namespace FortuneWheelLibrary
         bool GuessAnswer(string playerGuess);
         [OperationContract]
         Player[] GetAllPlayers();
+        [OperationContract]
+        void UpdatePlayer(Player p);
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -178,6 +180,14 @@ namespace FortuneWheelLibrary
         public Player[] GetAllPlayers()
         {
             return this.Players.ToArray();
+        }
+
+        public void UpdatePlayer(Player p)
+        {
+            Player play = Players.FirstOrDefault(player => player.Name == p.Name);
+            play.Score = p.Score;
+            play.isReady = p.isReady;
+            updateAllUsers();
         }
     }
 }
