@@ -50,6 +50,17 @@ namespace TestConsole
                 Console.WriteLine($"{pair.Key}, {pair.Value}");
             }
 
+            Console.WriteLine("\n\nThe longest phrase is: ");
+
+            string longestPhrase = "";
+
+            foreach (var s in from puzzle in wheel.Puzzles from s in puzzle.Value where s.Length > longestPhrase.Length select s)
+            {
+                longestPhrase = s;
+            }
+
+            Console.WriteLine($"\"{longestPhrase}\" at {longestPhrase.Length} chars."); //"What's Good For The Goose Is Good For The Gander" at 48 chars.
+
 
 
             Console.ReadKey();
