@@ -60,6 +60,7 @@ namespace FortuneWheelLibrary
             SetPuzzleState('-');
             SetPuzzleState('&');
             SetPuzzleState('\'');
+            SetPuzzleState('.');
         }
 
         private void SetPuzzleState(char c)
