@@ -6,18 +6,24 @@ using System.Drawing.Text;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
+using FortuneWheelLibrary;
 
 namespace FortuneWheel
 {
-    public partial class Form1 : Form
+    public partial class PrizeWheel : Form
     {
+        private Wheel wheel = null;
         private LinkedList<Image> wheelStates = new();
         private SoundPlayer wheelSound;
         private List<string> prizeValues;
 
-        public Form1()
+        public PrizeWheel()
         {
+
             InitializeComponent();
+
+            wheel = new Wheel(); // **************will need to be changed to create a Duplex channel instead ***********************
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -35,19 +41,18 @@ namespace FortuneWheel
             wheelStates.AddLast(Image.FromFile("../../../wheel/Slot 8 active.png"));
             wheelSound = new SoundPlayer(@"../../../wheel/singlePeg.wav");
 
-            prizeValues = new List<string>
+            LoadPrizeValues();
+
+
+        }
+
+        private void LoadPrizeValues()
+        {
+            prizeValues = new List<string>();
+            foreach (int i in wheel.WheelPrizes)
             {
-                "$3500",
-                "$500",
-                "$750",
-                "SKIP TURN",
-                "$2000",
-                "$5000",
-                "$10",
-                "$1000"
-            };
-
-
+                prizeValues.Add($"{i:C0}");
+            }
         }
 
         private void SpinWheel()
@@ -56,8 +61,6 @@ namespace FortuneWheel
             var spins = rand.Next(30,38); 
             double speed = rand.Next(8,15);
             IEnumerator<Image> e = wheelStates.GetEnumerator();
-            
-            
 
             for (int i = 0; i < spins; i++)
             {
@@ -80,9 +83,9 @@ namespace FortuneWheel
 
                 else
                     Thread.Sleep((int)Math.Ceiling(speed *= 1.11));
-                
-                
             }
+
+            wheel.CurrentPrize = wheel.WheelPrizes[(spins % 8)-1];
             e.Dispose();
         }
 

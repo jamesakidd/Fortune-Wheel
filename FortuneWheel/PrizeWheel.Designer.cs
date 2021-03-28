@@ -1,7 +1,7 @@
 ﻿
 namespace FortuneWheel
 {
-    partial class Form1
+    partial class PrizeWheel
     {
         /// <summary>
         ///  Required designer variable.
@@ -29,7 +29,7 @@ namespace FortuneWheel
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PrizeWheel));
             this.button1 = new System.Windows.Forms.Button();
             this.lbl_section2 = new System.Windows.Forms.Label();
             this.lbl_section1 = new System.Windows.Forms.Label();
@@ -124,7 +124,7 @@ namespace FortuneWheel
             // 
             this.lbl_section4.BackColor = System.Drawing.Color.Transparent;
             this.lbl_section4.CausesValidation = false;
-            this.lbl_section4.Font = new System.Drawing.Font("Bernard MT Condensed", 45F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_section4.Font = new System.Drawing.Font("Bernard MT Condensed", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lbl_section4.Location = new System.Drawing.Point(665, 90);
             this.lbl_section4.Name = "lbl_section4";
             this.lbl_section4.Size = new System.Drawing.Size(427, 350);
@@ -142,7 +142,7 @@ namespace FortuneWheel
             this.lbl_section3.TabIndex = 8;
             this.lbl_section3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Form1
+            // PrizeWheel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -161,9 +161,9 @@ namespace FortuneWheel
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "PrizeWheel";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.Text = "Form1";
+            this.Text = "PrizeWheel";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
             this.ResumeLayout(false);
