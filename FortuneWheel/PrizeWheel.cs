@@ -25,6 +25,7 @@ namespace FortuneWheel
 
             wheel = new Wheel(); // **************will need to be changed to create a Duplex channel instead ***********************
             wheel.AddPlayer(new Player("Player 1")); // probably move this somewhere else and certainly not hardcode it.
+            wheel.AddPlayer(new Player("Player 2")); // probably move this somewhere else and certainly not hardcode it.
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -58,14 +59,13 @@ namespace FortuneWheel
 
         private void SpinWheel()
         {
-            var rand = new Random();
+            var rand = new Random(DateTime.Now.Millisecond);
             var spins = rand.Next(30,38); 
             double speed = rand.Next(8,15);
             IEnumerator<Image> e = wheelStates.GetEnumerator();
 
             for (int i = 0; i < spins; i++)
             {
-                
                 if (e.MoveNext())
                 {
                     BackgroundImage = e.Current;
@@ -88,9 +88,8 @@ namespace FortuneWheel
 
             int wheelPosition  = spins % 8;
             wheel.CurrentPrize = wheelPosition == 0 ? wheel.WheelPrizes[wheelPosition] : wheel.WheelPrizes[wheelPosition - 1]; 
-
-
-           e.Dispose();
+            Thread.Sleep(1200);
+            e.Dispose();
         }
 
         private void button1_Click(object sender, EventArgs e)

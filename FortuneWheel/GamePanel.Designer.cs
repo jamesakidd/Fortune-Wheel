@@ -59,15 +59,25 @@ namespace FortuneWheel
             this.btn_B = new System.Windows.Forms.Button();
             this.btn_A = new System.Windows.Forms.Button();
             this.btn_M = new System.Windows.Forms.Button();
+            this.lbl_CurrentPrize = new System.Windows.Forms.Label();
+            this.lbl_Player1 = new System.Windows.Forms.Label();
+            this.lbl_Player2 = new System.Windows.Forms.Label();
+            this.lbl_Player4 = new System.Windows.Forms.Label();
+            this.lbl_Player3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.lbl_Player1Score = new System.Windows.Forms.Label();
+            this.lbl_Player2Score = new System.Windows.Forms.Label();
+            this.lbl_Player3Score = new System.Windows.Forms.Label();
+            this.lbl_Player4Score = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbl_PuzzleDisplay
             // 
             this.lbl_PuzzleDisplay.Font = new System.Drawing.Font("SimSun", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_PuzzleDisplay.Location = new System.Drawing.Point(32, 40);
+            this.lbl_PuzzleDisplay.Location = new System.Drawing.Point(32, 103);
             this.lbl_PuzzleDisplay.Name = "lbl_PuzzleDisplay";
-            this.lbl_PuzzleDisplay.Size = new System.Drawing.Size(824, 472);
+            this.lbl_PuzzleDisplay.Size = new System.Drawing.Size(824, 440);
             this.lbl_PuzzleDisplay.TabIndex = 0;
             // 
             // lbl_Category
@@ -418,11 +428,132 @@ namespace FortuneWheel
             this.btn_M.UseVisualStyleBackColor = true;
             this.btn_M.Click += new System.EventHandler(this.Letter_Click);
             // 
+            // lbl_CurrentPrize
+            // 
+            this.lbl_CurrentPrize.BackColor = System.Drawing.Color.Transparent;
+            this.lbl_CurrentPrize.Font = new System.Drawing.Font("Bernard MT Condensed", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_CurrentPrize.Location = new System.Drawing.Point(35, 13);
+            this.lbl_CurrentPrize.Name = "lbl_CurrentPrize";
+            this.lbl_CurrentPrize.Size = new System.Drawing.Size(821, 90);
+            this.lbl_CurrentPrize.TabIndex = 3;
+            this.lbl_CurrentPrize.Text = "$0,000";
+            this.lbl_CurrentPrize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbl_Player1
+            // 
+            this.lbl_Player1.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player1.Location = new System.Drawing.Point(9, 758);
+            this.lbl_Player1.Name = "lbl_Player1";
+            this.lbl_Player1.Size = new System.Drawing.Size(173, 44);
+            this.lbl_Player1.TabIndex = 4;
+            this.lbl_Player1.Text = "Test Player1";
+            this.lbl_Player1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbl_Player1.Visible = false;
+            // 
+            // lbl_Player2
+            // 
+            this.lbl_Player2.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player2.Location = new System.Drawing.Point(176, 758);
+            this.lbl_Player2.Name = "lbl_Player2";
+            this.lbl_Player2.Size = new System.Drawing.Size(183, 44);
+            this.lbl_Player2.TabIndex = 5;
+            this.lbl_Player2.Text = "Test Player2";
+            this.lbl_Player2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbl_Player2.Visible = false;
+            // 
+            // lbl_Player4
+            // 
+            this.lbl_Player4.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player4.Location = new System.Drawing.Point(700, 758);
+            this.lbl_Player4.Name = "lbl_Player4";
+            this.lbl_Player4.Size = new System.Drawing.Size(183, 44);
+            this.lbl_Player4.TabIndex = 7;
+            this.lbl_Player4.Text = "Test Player4";
+            this.lbl_Player4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbl_Player4.Visible = false;
+            // 
+            // lbl_Player3
+            // 
+            this.lbl_Player3.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player3.Location = new System.Drawing.Point(536, 758);
+            this.lbl_Player3.Name = "lbl_Player3";
+            this.lbl_Player3.Size = new System.Drawing.Size(169, 44);
+            this.lbl_Player3.TabIndex = 6;
+            this.lbl_Player3.Text = "Test Player3";
+            this.lbl_Player3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbl_Player3.Visible = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Gold;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Font = new System.Drawing.Font("Bernard MT Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button1.Location = new System.Drawing.Point(350, 758);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(176, 95);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "GUESS ANSWER";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // lbl_Player1Score
+            // 
+            this.lbl_Player1Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player1Score.Location = new System.Drawing.Point(35, 804);
+            this.lbl_Player1Score.Name = "lbl_Player1Score";
+            this.lbl_Player1Score.Size = new System.Drawing.Size(120, 28);
+            this.lbl_Player1Score.TabIndex = 9;
+            this.lbl_Player1Score.Text = "$0";
+            this.lbl_Player1Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Player1Score.Visible = false;
+            // 
+            // lbl_Player2Score
+            // 
+            this.lbl_Player2Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player2Score.Location = new System.Drawing.Point(202, 802);
+            this.lbl_Player2Score.Name = "lbl_Player2Score";
+            this.lbl_Player2Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player2Score.TabIndex = 10;
+            this.lbl_Player2Score.Text = "$0";
+            this.lbl_Player2Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Player2Score.Visible = false;
+            // 
+            // lbl_Player3Score
+            // 
+            this.lbl_Player3Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player3Score.Location = new System.Drawing.Point(555, 802);
+            this.lbl_Player3Score.Name = "lbl_Player3Score";
+            this.lbl_Player3Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player3Score.TabIndex = 11;
+            this.lbl_Player3Score.Text = "$0";
+            this.lbl_Player3Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Player3Score.Visible = false;
+            // 
+            // lbl_Player4Score
+            // 
+            this.lbl_Player4Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Player4Score.Location = new System.Drawing.Point(726, 802);
+            this.lbl_Player4Score.Name = "lbl_Player4Score";
+            this.lbl_Player4Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player4Score.TabIndex = 12;
+            this.lbl_Player4Score.Text = "$0";
+            this.lbl_Player4Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_Player4Score.Visible = false;
+            // 
             // GamePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(888, 865);
+            this.Controls.Add(this.lbl_Player4Score);
+            this.Controls.Add(this.lbl_Player3Score);
+            this.Controls.Add(this.lbl_Player2Score);
+            this.Controls.Add(this.lbl_Player1Score);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.lbl_Player4);
+            this.Controls.Add(this.lbl_Player3);
+            this.Controls.Add(this.lbl_Player2);
+            this.Controls.Add(this.lbl_Player1);
+            this.Controls.Add(this.lbl_CurrentPrize);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lbl_Category);
             this.Controls.Add(this.lbl_PuzzleDisplay);
@@ -466,5 +597,15 @@ namespace FortuneWheel
         private System.Windows.Forms.Button btn_B;
         private System.Windows.Forms.Button btn_A;
         private System.Windows.Forms.Button btn_M;
+        private System.Windows.Forms.Label lbl_CurrentPrize;
+        private System.Windows.Forms.Label lbl_Player1;
+        private System.Windows.Forms.Label lbl_Player2;
+        private System.Windows.Forms.Label lbl_Player4;
+        private System.Windows.Forms.Label lbl_Player3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label lbl_Player1Score;
+        private System.Windows.Forms.Label lbl_Player2Score;
+        private System.Windows.Forms.Label lbl_Player3Score;
+        private System.Windows.Forms.Label lbl_Player4Score;
     }
 }

@@ -39,6 +39,9 @@ namespace FortuneWheelLibrary
         {
             char square = Convert.ToChar(254);
             PuzzleState = new string(CurrentPhrase.Select(c => c == ' ' ? ' ' : '█').ToArray());
+            SetPuzzleState('-');
+            SetPuzzleState('&');
+            SetPuzzleState('\'');
         }
 
         private void SetPuzzleState(char c)
@@ -126,8 +129,7 @@ namespace FortuneWheelLibrary
             if(count > 0)
                 SetPuzzleState(c);
 
-            Players[0].Score = CurrentPrize * count; //HARDCODED FOR TESTING
+            Players[0].Score += CurrentPrize * count; //HARDCODED FOR TESTING
         }
     }
-
 }
