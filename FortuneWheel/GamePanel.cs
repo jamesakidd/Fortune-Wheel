@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -18,6 +19,7 @@ namespace FortuneWheel
         private IWheel wheel;
         Player user;
         bool isUsersTurn;
+        bool isSpinning = false;
         List<Player> players;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
@@ -52,8 +54,13 @@ namespace FortuneWheel
             if (p.Name == user.Name)
             {
                 isUsersTurn = true;
+                isSpinning = true;
                 PrizeWheel pw = new PrizeWheel(wheel);
-                pw.Show();
+                Hide();
+                pw.ShowDialog();
+                lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
+                Show();
+                isSpinning = false;
             }
             else
             {
@@ -78,7 +85,6 @@ namespace FortuneWheel
             lbl_Category.Text = wheel.GetCurrentCategory();
             lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
             
-
             for (int i = 0; i < players.Count; i++)
             {
                 playerLabels[i].Visible = true;
@@ -87,7 +93,6 @@ namespace FortuneWheel
                 playerScoreLabels[i].Visible = true;
                 playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
-
         }
 
         private void Letter_Click(object sender, EventArgs e)
@@ -120,17 +125,7 @@ namespace FortuneWheel
                 using (AnswerDialog answerDiag = new AnswerDialog())
                 {
                     answerDiag.ShowDialog();
-                    bool isCorrect = wheel.GuessAnswer(answerDiag.Answer);
-
-                    if (isCorrect)
-                    {
-                        //show game end dialog
-                    }
-                    else
-                    {
-                        //continue game flow
-                        wheel.NextPlayer();
-                    }
+                    wheel.GuessAnswer(answerDiag.Answer);
                 }
             }
         }
@@ -143,8 +138,13 @@ namespace FortuneWheel
             {
                 try
                 {
-                    isUsersTurn = false;
-                    GetCurrentPlayer();
+                    if (wheel.GameOver())
+                    {
+                        MessageBox.Show($"Game over. {wheel.GetCurrentPlayer()} Won!");
+                        Close();
+                    }
+                    if (!isSpinning)
+                        GetCurrentPlayer();
                     players = messages.ToList();
                     UpdatePlayerScores();
                     lbl_PuzzleDisplay.Text = wheel.GetCurrentState();

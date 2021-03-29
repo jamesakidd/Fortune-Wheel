@@ -17,7 +17,7 @@ namespace FortuneWheelLibrary
         [OperationContract]
         void MakeGuess(char c);
         [OperationContract]
-        bool GuessAnswer(string playerGuess);
+        void GuessAnswer(string playerGuess);
         [OperationContract]
         Player[] GetAllPlayers();
         [OperationContract]
@@ -36,6 +36,8 @@ namespace FortuneWheelLibrary
         Player GetCurrentPlayer();
         [OperationContract]
         void NextPlayer();
+        [OperationContract]
+        bool GameOver();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -53,6 +55,7 @@ namespace FortuneWheelLibrary
         public string CurrentCategory { get; set; }
         public string CurrentPhrase { get; set; }
         public string PuzzleState { get; set; }
+        public bool gameOver { get; set; }
 
 
         private const string PUZZLE_FILE = "./fortuneWheelPuzzles.json";
@@ -188,9 +191,10 @@ namespace FortuneWheelLibrary
             Players[CurrentPlayer].Score += CurrentPrize * count;
         }
 
-        public bool GuessAnswer(string playerGuess)
+        public void GuessAnswer(string playerGuess)
         {
-            return string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+            gameOver = string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+            updateAllUsers();
         }
 
         public Player[] GetAllPlayers()
@@ -247,6 +251,11 @@ namespace FortuneWheelLibrary
                 CurrentPlayer++;
             }
             updateAllUsers();
+        }
+
+        public bool GameOver()
+        {
+            return gameOver;
         }
     }
 }

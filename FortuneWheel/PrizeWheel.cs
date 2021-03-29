@@ -95,7 +95,7 @@ namespace FortuneWheel
         private void button1_Click(object sender, EventArgs e)
         {
             SpinWheel();
-            Hide();
+            Close();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

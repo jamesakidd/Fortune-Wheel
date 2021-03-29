@@ -63,6 +63,10 @@ namespace FortuneWheel
         {
             if ( thread.Thread == System.Threading.Thread.CurrentThread)
             {
+                if (GameStarted)
+                {
+                    this.BeginInvoke(new GuiUpdateDelegate(gamePanel.PlayersUpdated), new object[] { players.ToArray() });
+                }
                 int readyPlayers = 0;
                 for (int i = 0; i <= playerLabels.Count; i++)
                 {
@@ -77,9 +81,10 @@ namespace FortuneWheel
                 if (readyPlayers >= 2 && readyPlayers == players.Count)
                 {
                     GameStarted = true;
-                    gamePanel ??= new GamePanel(wheel, players, user);
                     Hide();
+                    gamePanel ??= new GamePanel(wheel, players, user);
                     gamePanel.Show();
+                    gamePanel.FormClosed += (object source, FormClosedEventArgs e) => Close();
                 }
             }
             else
