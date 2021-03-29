@@ -9,6 +9,6 @@ namespace FortuneWheelLibrary
     public interface ICallback
     {
         [OperationContract(IsOneWay = true)]
-        void SendAllMessages(Player[] messages);
+        void PlayersUpdated(Player[] messages);
     }
 }

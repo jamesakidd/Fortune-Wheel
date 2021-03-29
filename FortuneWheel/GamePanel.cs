@@ -7,20 +7,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using FortuneWheelLibrary;
 
 namespace FortuneWheel
 {
-    public partial class GamePanel : Form
+    public partial class GamePanel : Form, ICallback
     {
-
-        private Wheel wheel;
+        Dispatcher thread = Dispatcher.CurrentDispatcher;
+        private IWheel wheel;
+        Player user;
+        List<Player> players;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
 
-        public GamePanel(Wheel wheel)
+        public GamePanel(IWheel wheel, List<Player> p, Player u)
         {
-
+            user = u;
+            players = p;
             this.wheel = wheel;
             InitializeComponent();
             LoadPlayerNameArray();
@@ -42,18 +46,18 @@ namespace FortuneWheel
 
         private void GamePanel_Load(object sender, EventArgs e)
         {
-            lbl_PuzzleDisplay.Text = wheel.PuzzleState;
-            lbl_Category.Text = wheel.CurrentCategory;
-            lbl_CurrentPrize.Text = wheel.CurrentPrize.ToString("C0");
+            lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
+            lbl_Category.Text = wheel.GetCurrentCategory();
+            lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
             
 
-            for (int i = 0; i < wheel.Players.Count; i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 playerLabels[i].Visible = true;
-                playerLabels[i].Text = wheel.Players[i].Name;
+                playerLabels[i].Text = players[i].Name;
 
                 playerScoreLabels[i].Visible = true;
-                playerScoreLabels[i].Text = wheel.Players[i].Score.ToString("C0");
+                playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
 
 
@@ -70,7 +74,7 @@ namespace FortuneWheel
             char c = btn.Text.First();
             btn.Enabled = false;
             wheel.MakeGuess(c);
-            lbl_PuzzleDisplay.Text = wheel.PuzzleState;
+            lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
             UpdatePlayerScores();
 
 
@@ -84,9 +88,9 @@ namespace FortuneWheel
 
         private void UpdatePlayerScores() //Will need to be made dynamic for number of players in game.
         {
-            for (int i = 0; i < wheel.Players.Count; i++)
+            for (int i = 0; i < players.Count; i++)
             {
-                playerScoreLabels[i].Text = wheel.Players[i].Score.ToString("C0");
+                playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
         }
 
@@ -106,6 +110,25 @@ namespace FortuneWheel
                     //continue game flow
                 }
             }
+        }
+        private delegate void GuiUpdateDelegate(Player[] messages);
+        // Do updates and such here
+        public void PlayersUpdated(Player[] messages)
+        {
+
+            if (thread.Thread == System.Threading.Thread.CurrentThread)
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
         }
     }
 }

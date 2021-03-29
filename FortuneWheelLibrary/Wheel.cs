@@ -22,11 +22,22 @@ namespace FortuneWheelLibrary
         Player[] GetAllPlayers();
         [OperationContract]
         void UpdatePlayer(Player p);
+        [OperationContract]
+        int CurrentPrize();
+        [OperationContract]
+        void SetPrize(int p);
+        [OperationContract]
+        List<int> GetPrizes();
+        [OperationContract]
+        string GetCurrentState();
+        [OperationContract]
+        string GetCurrentCategory();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Wheel : IWheel
     {
+        const int MAX_PLAYERS = 4;
         private Dictionary<string, ICallback> callbacks = new Dictionary<string, ICallback>();
         public bool gameStarted { get; set; }
         public List<Player> Players { get; set; }
@@ -141,7 +152,7 @@ namespace FortuneWheelLibrary
         /// <param name="player">The player to be added</param>
         public bool AddPlayer(Player player)
         {
-            if (callbacks.ContainsKey(player.Name.ToUpper()))
+            if (callbacks.ContainsKey(player.Name.ToUpper()) || Players.Count >= MAX_PLAYERS)
                 // User alias must be unique
                 return false;
             else
@@ -160,7 +171,7 @@ namespace FortuneWheelLibrary
         {
             Player[] msgs = GetAllPlayers();
             foreach (ICallback cb in callbacks.Values)
-                cb.SendAllMessages(msgs);
+                cb.PlayersUpdated(msgs);
         }
 
         public void MakeGuess(char c)
@@ -188,6 +199,31 @@ namespace FortuneWheelLibrary
             play.Score = p.Score;
             play.isReady = p.isReady;
             updateAllUsers();
+        }
+
+        int IWheel.CurrentPrize()
+        {
+            return CurrentPrize;
+        }
+
+        public List<int> GetPrizes()
+        {
+            return WheelPrizes;
+        }
+
+        public void SetPrize(int prize)
+        {
+            CurrentPrize = prize;
+        }
+
+        public string GetCurrentState()
+        {
+            return PuzzleState;
+        }
+
+        public string GetCurrentCategory()
+        {
+            return CurrentCategory;
         }
     }
 }

@@ -16,6 +16,8 @@ namespace FortuneWheel
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, UseSynchronizationContext = false)]
     public partial class MainMenu : Form, ICallback
     {
+        const int MAX_PLAYERS = 4;
+        Dispatcher thread = Dispatcher.CurrentDispatcher;
         private Player User;
         private IWheel wheel = null;
         private List<Player> players;
@@ -32,10 +34,10 @@ namespace FortuneWheel
         }
 
         private delegate void GuiUpdateDelegate(Player[] messages);
-        public void SendAllMessages(Player[] messages)
+        public void PlayersUpdated(Player[] messages)
         {
 
-            if (Dispatcher.CurrentDispatcher.Thread == System.Threading.Thread.CurrentThread)
+            if (thread.Thread == System.Threading.Thread.CurrentThread)
             {
                 try
                 {
@@ -48,20 +50,31 @@ namespace FortuneWheel
                 }
             }
             else
-                this.BeginInvoke(new GuiUpdateDelegate(SendAllMessages), new object[] { messages });
+                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
         }
 
         private void PlayersUpdated()
         {
-            for (int i = 0; i <= playerLabels.Count; i++)
+            if ( thread.Thread == System.Threading.Thread.CurrentThread)
             {
-                if (players.Count <= i)
+                int readyPlayers = 0;
+                for (int i = 0; i <= playerLabels.Count; i++)
                 {
-                    break;
+                    if (players.Count <= i)
+                    {
+                        break;
+                    }
+                    string ready = players[i].isReady ? "(Ready)" : "(Not Ready)";
+                    readyPlayers += players[i].isReady ? 1 : 0;
+                    playerLabels[i].Text = $"{players[i]} {ready}";
                 }
-                string ready = players[i].isReady ? "(ready)" : "(Not Ready)";
-                playerLabels[i].Text = $"{players[i]} {ready}";
+                if (readyPlayers >= 2 && readyPlayers == players.Count)
+                {
+                    // Start game
+                }
             }
+            else
+                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { players.ToArray() });
         }
 
         private void button_join_Click(object sender, EventArgs e)
@@ -80,9 +93,16 @@ namespace FortuneWheel
                 }
                 else
                 {
+                    if (wheel.GetAllPlayers().Length == MAX_PLAYERS)
+                    {
+                        MessageBox.Show("ERROR: No room for any additional players");
+                    }
+                    else
+                    {
+                        MessageBox.Show("ERROR: Alias in use. Please try again.");
+                    }
                     // Alias rejected by the service so nullify service proxies
                     wheel = null;
-                    MessageBox.Show("ERROR: Alias in use. Please try again.");
                 }
             }
             catch (Exception ex)
