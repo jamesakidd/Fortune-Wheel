@@ -52,6 +52,9 @@
     <Compile Include="Wheel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fortuneWheelPuzzles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

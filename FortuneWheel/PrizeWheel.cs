@@ -22,12 +22,10 @@ namespace FortuneWheel
         private List<string> prizeValues;
         private GamePanel gamePanel;
 
-        public PrizeWheel(IWheel w, List<Player> p, Player u)
+        public PrizeWheel(IWheel w)
         {
+            wheel = w;
             InitializeComponent();
-            user = u;
-            players = p;
-            wheel = w; 
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -97,9 +95,7 @@ namespace FortuneWheel
         private void button1_Click(object sender, EventArgs e)
         {
             SpinWheel();
-            gamePanel ??= new GamePanel(wheel, players, user);
             Hide();
-            gamePanel.Show();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)

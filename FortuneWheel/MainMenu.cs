@@ -18,10 +18,12 @@ namespace FortuneWheel
     {
         const int MAX_PLAYERS = 4;
         Dispatcher thread = Dispatcher.CurrentDispatcher;
-        private Player User;
+        private Player user;
         private IWheel wheel = null;
         private List<Player> players;
         private List<Label> playerLabels;
+        private bool GameStarted = false;
+        GamePanel gamePanel;
         public MainMenu()
         {
             players = new List<Player>();
@@ -39,6 +41,10 @@ namespace FortuneWheel
 
             if (thread.Thread == System.Threading.Thread.CurrentThread)
             {
+                if (GameStarted)
+                {
+                    this.BeginInvoke(new GuiUpdateDelegate(gamePanel.PlayersUpdated), new object[] { messages });
+                }
                 try
                 {
                     players = messages.ToList();
@@ -70,7 +76,10 @@ namespace FortuneWheel
                 }
                 if (readyPlayers >= 2 && readyPlayers == players.Count)
                 {
-                    // Start game
+                    GameStarted = true;
+                    gamePanel ??= new GamePanel(wheel, players, user);
+                    Hide();
+                    gamePanel.Show();
                 }
             }
             else
@@ -86,7 +95,7 @@ namespace FortuneWheel
                 Player p = new Player(textBox_UserName.Text);
                 if (wheel.AddPlayer(p))
                 {
-                    User = p;
+                    user = p;
                     players = wheel.GetAllPlayers().ToList();
                     PlayersUpdated();
                     button_join.Enabled = false;
@@ -113,8 +122,8 @@ namespace FortuneWheel
 
         private void button_Ready_Click(object sender, EventArgs e)
         {
-            User.isReady = !User.isReady;
-            wheel.UpdatePlayer(User);
+            user.isReady = !user.isReady;
+            wheel.UpdatePlayer(user);
             PlayersUpdated();
         }
     }

@@ -32,6 +32,10 @@ namespace FortuneWheelLibrary
         string GetCurrentState();
         [OperationContract]
         string GetCurrentCategory();
+        [OperationContract]
+        Player GetCurrentPlayer();
+        [OperationContract]
+        void NextPlayer();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -41,6 +45,7 @@ namespace FortuneWheelLibrary
         private Dictionary<string, ICallback> callbacks = new Dictionary<string, ICallback>();
         public bool gameStarted { get; set; }
         public List<Player> Players { get; set; }
+        public int CurrentPlayer { get; set; }
         public List<int> WheelPrizes { get; set; }
         public Dictionary<string, List<string>> Puzzles { get; set; } //Key: Category Value: A List of possible phrases.
         public Dictionary<char, bool> Letters { get; set; } //A letter and bool for if it's available to play.
@@ -58,12 +63,12 @@ namespace FortuneWheelLibrary
             Puzzles = new Dictionary<string, List<string>>();
             Letters = new Dictionary<char, bool>();
             gameStarted = false;
-            /*
+            CurrentPlayer = 0;
             LoadWheelPrizes();
             LoadLetters();
             LoadPuzzles();
             PickCurrentPuzzle();
-            SetInitialPuzzleState();*/
+            SetInitialPuzzleState();
         }
 
         private void SetInitialPuzzleState()
@@ -180,7 +185,7 @@ namespace FortuneWheelLibrary
             if(count > 0)
                 SetPuzzleState(c);
 
-            Players[0].Score += CurrentPrize * count; //HARDCODED FOR TESTING
+            Players[CurrentPlayer].Score += CurrentPrize * count;
         }
 
         public bool GuessAnswer(string playerGuess)
@@ -224,6 +229,24 @@ namespace FortuneWheelLibrary
         public string GetCurrentCategory()
         {
             return CurrentCategory;
+        }
+
+        public Player GetCurrentPlayer()
+        {
+            return Players[CurrentPlayer];
+        }
+
+        public void NextPlayer()
+        {
+            if (CurrentPlayer+1 >= Players.Count)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                CurrentPlayer++;
+            }
+            updateAllUsers();
         }
     }
 }

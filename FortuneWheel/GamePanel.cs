@@ -17,6 +17,7 @@ namespace FortuneWheel
         Dispatcher thread = Dispatcher.CurrentDispatcher;
         private IWheel wheel;
         Player user;
+        bool isUsersTurn;
         List<Player> players;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
@@ -26,17 +27,44 @@ namespace FortuneWheel
             user = u;
             players = p;
             this.wheel = wheel;
+            isUsersTurn = false;
             InitializeComponent();
             LoadPlayerNameArray();
             LoadPlayerScoreArray();
+            GetCurrentPlayer();
+            this.Text = u.Name;
         }
 
+        private void GetCurrentPlayer()
+        {
+            Player p = wheel.GetCurrentPlayer();
+            foreach (var play in players)
+            {
+                if (play.Name == p.Name)
+                {
+                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Red;
+                }
+                else
+                {
+                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Black;
+                }
+            }
+            if (p.Name == user.Name)
+            {
+                isUsersTurn = true;
+                PrizeWheel pw = new PrizeWheel(wheel);
+                pw.Show();
+            }
+            else
+            {
+                isUsersTurn = false;
+            }
+        }
         private void LoadPlayerScoreArray()
         {
             playerScoreLabels = new List<Label>
                 {lbl_Player1Score, lbl_Player2Score, lbl_Player3Score, lbl_Player4Score};
         }
-
         private void LoadPlayerNameArray()
         {
             playerLabels = new List<Label> {lbl_Player1, lbl_Player2, lbl_Player3, lbl_Player4};
@@ -60,30 +88,21 @@ namespace FortuneWheel
                 playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
 
-
-            
-
-
-
-
         }
 
         private void Letter_Click(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-            char c = btn.Text.First();
-            btn.Enabled = false;
-            wheel.MakeGuess(c);
-            lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
-            UpdatePlayerScores();
-
-
-            //Hide gamepanel form
-            //"SWITCH" players
-            //show prizewheel form
-
-
-            Refresh();
+            if (isUsersTurn)
+            {
+                var btn = sender as Button;
+                char c = btn.Text.First();
+                btn.Enabled = false;
+                wheel.MakeGuess(c);
+                lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
+                UpdatePlayerScores();
+                Refresh();
+                wheel.NextPlayer();
+            }
         }
 
         private void UpdatePlayerScores() //Will need to be made dynamic for number of players in game.
@@ -96,18 +115,22 @@ namespace FortuneWheel
 
         private void btn_answer_MouseClick(object sender, MouseEventArgs e)
         {
-            using (AnswerDialog answerDiag = new AnswerDialog())
+            if (isUsersTurn)
             {
-                answerDiag.ShowDialog();
-                bool isCorrect = wheel.GuessAnswer(answerDiag.Answer);
+                using (AnswerDialog answerDiag = new AnswerDialog())
+                {
+                    answerDiag.ShowDialog();
+                    bool isCorrect = wheel.GuessAnswer(answerDiag.Answer);
 
-                if (isCorrect)
-                {
-                    //show game end dialog
-                }
-                else
-                {
-                    //continue game flow
+                    if (isCorrect)
+                    {
+                        //show game end dialog
+                    }
+                    else
+                    {
+                        //continue game flow
+                        wheel.NextPlayer();
+                    }
                 }
             }
         }
@@ -120,7 +143,12 @@ namespace FortuneWheel
             {
                 try
                 {
-
+                    isUsersTurn = false;
+                    GetCurrentPlayer();
+                    players = messages.ToList();
+                    UpdatePlayerScores();
+                    lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
+                    Refresh();
                 }
                 catch (Exception ex)
                 {
