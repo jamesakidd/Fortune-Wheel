@@ -13,7 +13,7 @@ namespace FortuneWheelLibrary
     public interface IWheel
     {
         [OperationContract]
-        bool AddPlayer(Player player);
+        bool AddPlayer(string name, out Player p);
         [OperationContract]
         void MakeGuess(char c);
         [OperationContract]
@@ -38,6 +38,8 @@ namespace FortuneWheelLibrary
         void NextPlayer();
         [OperationContract]
         bool GameOver();
+        [OperationContract]
+        Dictionary<char, bool> GetLetters();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -161,18 +163,20 @@ namespace FortuneWheelLibrary
         /// Adds a player to the list of players
         /// </summary>
         /// <param name="player">The player to be added</param>
-        public bool AddPlayer(Player player)
+        public bool AddPlayer(string name, out Player p)
         {
-            if (callbacks.ContainsKey(player.Name.ToUpper()) || Players.Count >= MAX_PLAYERS)
+            p = null;
+            if (callbacks.ContainsKey(name.ToUpper()) || Players.Count >= MAX_PLAYERS)
                 // User alias must be unique
                 return false;
             else
             {
-                Players.Add(player);
+                p = new Player(name);
+                Players.Add(p);
                 // Retrieve client's callback proxy
                 ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
                 // Save alias and callback proxy
-                callbacks.Add(player.Name.ToUpper(), cb);
+                callbacks.Add(p.Name.ToUpper(), cb);
                 updateAllUsers();
                 return true;
             }
@@ -260,6 +264,11 @@ namespace FortuneWheelLibrary
         public bool GameOver()
         {
             return gameOver;
+        }
+
+        public Dictionary<char, bool> GetLetters()
+        {
+            return Letters;
         }
     }
 }

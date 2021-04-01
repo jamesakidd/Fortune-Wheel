@@ -97,10 +97,8 @@ namespace FortuneWheel
             {
                 DuplexChannelFactory<IWheel> channel = new DuplexChannelFactory<IWheel>(this, "WheelService");
                 wheel = channel.CreateChannel();
-                Player p = new Player(textBox_UserName.Text);
-                if (wheel.AddPlayer(p))
+                if (wheel.AddPlayer(textBox_UserName.Text, out user))
                 {
-                    user = p;
                     players = wheel.GetAllPlayers().ToList();
                     PlayersUpdated();
                     button_join.Enabled = false;

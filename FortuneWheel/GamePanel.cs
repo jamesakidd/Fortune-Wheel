@@ -130,6 +130,14 @@ namespace FortuneWheel
             }
         }
 
+        private void UpdateLetters()
+        {
+            Dictionary<char, bool> letters = wheel.GetLetters();
+            foreach (Button control in tableLayoutPanel1.Controls)
+            {
+                control.Enabled = letters[control.Text[0]];
+            }
+        }
 
         private delegate void GuiUpdateDelegate(Player[] messages);
         // Do updates and such here
@@ -150,6 +158,7 @@ namespace FortuneWheel
                     players = messages.ToList();
                     UpdatePlayerScores();
                     lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
+                    UpdateLetters();
                     Refresh();
                 }
                 catch (Exception ex)
