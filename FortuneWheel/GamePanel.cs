@@ -57,7 +57,7 @@ namespace FortuneWheel
                 isSpinning = true;
                 PrizeWheel pw = new PrizeWheel(wheel);
                 Hide();
-                pw.ShowDialog();
+                pw.ShowDialog(this);
                 lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
                 Show();
                 isSpinning = false;
@@ -94,6 +94,7 @@ namespace FortuneWheel
                 playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
         }
+
 
         private void Letter_Click(object sender, EventArgs e)
         {
