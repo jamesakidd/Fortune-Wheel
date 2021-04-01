@@ -15,7 +15,7 @@ namespace FortuneWheelLibrary
         [OperationContract]
         bool AddPlayer(string name, out Player p);
         [OperationContract]
-        void MakeGuess(char c);
+        bool MakeGuess(char c);
         [OperationContract]
         void GuessAnswer(string playerGuess);
         [OperationContract]
@@ -189,19 +189,27 @@ namespace FortuneWheelLibrary
                 cb.PlayersUpdated(msgs);
         }
 
-        public void MakeGuess(char c)
+        public bool MakeGuess(char c)
         {
             Letters[c] = false;
             int count = CurrentPhrase.ToUpper().Count(f => f == c);
-            if(count > 0)
-                SetPuzzleState(c);
-
             Players[CurrentPlayer].Score += CurrentPrize * count;
+            if (count <= 0) return false;
+            SetPuzzleState(c);
+            return true;
         }
 
         public void GuessAnswer(string playerGuess)
         {
-            gameOver = string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+            if (string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase))
+            {
+                int remainingBlocks = Enumerable.Range(0, CurrentPhrase.Length)
+                    .Count(i => PuzzleState[i] != CurrentPhrase[i]);
+
+                Players[CurrentPlayer].Score += CurrentPrize * remainingBlocks;
+                gameOver = true;
+            }
+
             updateAllUsers();
         }
 

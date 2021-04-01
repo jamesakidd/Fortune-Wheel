@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,9 @@ namespace FortuneWheel
         bool isUsersTurn;
         bool isSpinning = false;
         List<Player> players;
+        private SoundPlayer wrongSound;
+        private SoundPlayer rightSound;
+        private SoundPlayer winnerSound;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
 
@@ -34,7 +38,10 @@ namespace FortuneWheel
             LoadPlayerNameArray();
             LoadPlayerScoreArray();
             GetCurrentPlayer();
-            this.Text = u.Name;
+            Text = u.Name;
+            wrongSound = new SoundPlayer(@"../../../wheel/wrong_buzzer.wav");
+            rightSound = new SoundPlayer(@"../../../wheel/correct_tone.wav");
+            winnerSound = new SoundPlayer(@"../../../wheel/winner.wav");
         }
 
         private void GetCurrentPlayer()
@@ -78,9 +85,9 @@ namespace FortuneWheel
         }
 
 
-
         private void GamePanel_Load(object sender, EventArgs e)
         {
+            btn_answer.BackgroundImage = Image.FromFile("../../../wheel/gold_button.png");
             lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
             lbl_Category.Text = wheel.GetCurrentCategory();
             lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
@@ -93,6 +100,8 @@ namespace FortuneWheel
                 playerScoreLabels[i].Visible = true;
                 playerScoreLabels[i].Text = players[i].Score.ToString("C0");
             }
+
+            
         }
 
 
@@ -103,7 +112,16 @@ namespace FortuneWheel
                 var btn = sender as Button;
                 char c = btn.Text.First();
                 btn.Enabled = false;
-                wheel.MakeGuess(c);
+
+                if (wheel.MakeGuess(c))
+                {
+                    rightSound.Play();
+                }
+                else
+                {
+                    wrongSound.Play();
+                }
+
                 lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
                 UpdatePlayerScores();
                 Refresh();
@@ -151,7 +169,17 @@ namespace FortuneWheel
                 {
                     if (wheel.GameOver())
                     {
-                        MessageBox.Show($"Game over. {wheel.GetCurrentPlayer()} Won!");
+                        try
+                        {
+                            Player winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
+                            winnerSound.Play();
+                            MessageBox.Show($@"Game over. {winner} won with {winner.Score:C0}!");
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($@"Error getting winner: {ex.Message}");
+                        }
+
                         Close();
                     }
                     if (!isSpinning)
@@ -159,6 +187,7 @@ namespace FortuneWheel
                     players = messages.ToList();
                     UpdatePlayerScores();
                     lbl_PuzzleDisplay.Text = wheel.GetCurrentState();
+                    btn_answer.Enabled = isUsersTurn;
                     UpdateLetters();
                     Refresh();
                 }

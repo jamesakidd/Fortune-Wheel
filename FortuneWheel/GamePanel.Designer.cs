@@ -486,12 +486,15 @@ namespace FortuneWheel
             // 
             // btn_answer
             // 
-            this.btn_answer.BackColor = System.Drawing.Color.Gold;
-            this.btn_answer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn_answer.Font = new System.Drawing.Font("Bernard MT Condensed", 24F);
-            this.btn_answer.Location = new System.Drawing.Point(300, 657);
+            this.btn_answer.BackColor = System.Drawing.Color.Transparent;
+            this.btn_answer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_answer.Enabled = false;
+            this.btn_answer.FlatAppearance.BorderSize = 0;
+            this.btn_answer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_answer.Font = new System.Drawing.Font("Bernard MT Condensed", 22F);
+            this.btn_answer.Location = new System.Drawing.Point(290, 657);
             this.btn_answer.Name = "btn_answer";
-            this.btn_answer.Size = new System.Drawing.Size(151, 82);
+            this.btn_answer.Size = new System.Drawing.Size(180, 96);
             this.btn_answer.TabIndex = 8;
             this.btn_answer.Text = "GUESS ANSWER";
             this.btn_answer.UseVisualStyleBackColor = false;
