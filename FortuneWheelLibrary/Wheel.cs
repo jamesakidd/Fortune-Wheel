@@ -51,6 +51,9 @@ namespace FortuneWheelLibrary
         public List<int> WheelPrizes { get; set; }
         public Dictionary<string, List<string>> Puzzles { get; set; } //Key: Category Value: A List of possible phrases.
         public Dictionary<char, bool> Letters { get; set; } //A letter and bool for if it's available to play.
+
+
+
         public int CurrentPrize { get; set; }
         public string CurrentCategory { get; set; }
         public string CurrentPhrase { get; set; }
@@ -184,6 +187,7 @@ namespace FortuneWheelLibrary
 
         public void MakeGuess(char c)
         {
+            Letters[c] = false;
             int count = CurrentPhrase.ToUpper().Count(f => f == c);
             if(count > 0)
                 SetPuzzleState(c);

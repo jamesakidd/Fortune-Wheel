@@ -129,6 +129,8 @@ namespace FortuneWheel
                 }
             }
         }
+
+
         private delegate void GuiUpdateDelegate(Player[] messages);
         // Do updates and such here
         public void PlayersUpdated(Player[] messages)
