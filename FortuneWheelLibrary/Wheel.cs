@@ -5,19 +5,62 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
+using System.ServiceModel;
 
 namespace FortuneWheelLibrary
 {
-    public class Wheel
+    [ServiceContract(CallbackContract = typeof(ICallback))]
+    public interface IWheel
     {
+        [OperationContract]
+        bool AddPlayer(string name, out Player p);
+        [OperationContract]
+        void MakeGuess(char c);
+        [OperationContract]
+        void GuessAnswer(string playerGuess);
+        [OperationContract]
+        Player[] GetAllPlayers();
+        [OperationContract]
+        void UpdatePlayer(Player p);
+        [OperationContract]
+        int CurrentPrize();
+        [OperationContract]
+        void SetPrize(int p);
+        [OperationContract]
+        List<int> GetPrizes();
+        [OperationContract]
+        string GetCurrentState();
+        [OperationContract]
+        string GetCurrentCategory();
+        [OperationContract]
+        Player GetCurrentPlayer();
+        [OperationContract]
+        void NextPlayer();
+        [OperationContract]
+        bool GameOver();
+        [OperationContract]
+        Dictionary<char, bool> GetLetters();
+    }
+
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public class Wheel : IWheel
+    {
+        const int MAX_PLAYERS = 4;
+        private Dictionary<string, ICallback> callbacks = new Dictionary<string, ICallback>();
+        public bool gameStarted { get; set; }
         public List<Player> Players { get; set; }
+        public int CurrentPlayer { get; set; }
         public List<int> WheelPrizes { get; set; }
         public Dictionary<string, List<string>> Puzzles { get; set; } //Key: Category Value: A List of possible phrases.
         public Dictionary<char, bool> Letters { get; set; } //A letter and bool for if it's available to play.
+
+
+
         public int CurrentPrize { get; set; }
         public string CurrentCategory { get; set; }
         public string CurrentPhrase { get; set; }
         public string PuzzleState { get; set; }
+        public bool gameOver { get; set; }
 
 
         private const string PUZZLE_FILE = "./fortuneWheelPuzzles.json";
@@ -27,7 +70,8 @@ namespace FortuneWheelLibrary
             Players = new List<Player>();
             Puzzles = new Dictionary<string, List<string>>();
             Letters = new Dictionary<char, bool>();
-
+            gameStarted = false;
+            CurrentPlayer = 0;
             LoadWheelPrizes();
             LoadLetters();
             LoadPuzzles();
@@ -119,23 +163,112 @@ namespace FortuneWheelLibrary
         /// Adds a player to the list of players
         /// </summary>
         /// <param name="player">The player to be added</param>
-        public void AddPlayer(Player player)
+        public bool AddPlayer(string name, out Player p)
         {
-            Players.Add(player);
+            p = null;
+            if (callbacks.ContainsKey(name.ToUpper()) || Players.Count >= MAX_PLAYERS)
+                // User alias must be unique
+                return false;
+            else
+            {
+                p = new Player(name);
+                Players.Add(p);
+                // Retrieve client's callback proxy
+                ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
+                // Save alias and callback proxy
+                callbacks.Add(p.Name.ToUpper(), cb);
+                updateAllUsers();
+                return true;
+            }
+        }
+
+        private void updateAllUsers()
+        {
+            Player[] msgs = GetAllPlayers();
+            foreach (ICallback cb in callbacks.Values)
+                cb.PlayersUpdated(msgs);
         }
 
         public void MakeGuess(char c)
         {
+            Letters[c] = false;
             int count = CurrentPhrase.ToUpper().Count(f => f == c);
             if(count > 0)
                 SetPuzzleState(c);
 
-            Players[0].Score += CurrentPrize * count; //HARDCODED FOR TESTING
+            Players[CurrentPlayer].Score += CurrentPrize * count;
         }
 
-        public bool GuessAnswer(string playerGuess)
+        public void GuessAnswer(string playerGuess)
         {
-            return string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+            gameOver = string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
+            updateAllUsers();
+        }
+
+        public Player[] GetAllPlayers()
+        {
+            return this.Players.ToArray();
+        }
+
+        public void UpdatePlayer(Player p)
+        {
+            Player play = Players.FirstOrDefault(player => player.Name == p.Name);
+            play.Score = p.Score;
+            play.isReady = p.isReady;
+            updateAllUsers();
+        }
+
+        int IWheel.CurrentPrize()
+        {
+            return CurrentPrize;
+        }
+
+        public List<int> GetPrizes()
+        {
+            return WheelPrizes;
+        }
+
+        public void SetPrize(int prize)
+        {
+            CurrentPrize = prize;
+        }
+
+        public string GetCurrentState()
+        {
+            return PuzzleState;
+        }
+
+        public string GetCurrentCategory()
+        {
+            return CurrentCategory;
+        }
+
+        public Player GetCurrentPlayer()
+        {
+            return Players[CurrentPlayer];
+        }
+
+        public void NextPlayer()
+        {
+            if (CurrentPlayer+1 >= Players.Count)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                CurrentPlayer++;
+            }
+            updateAllUsers();
+        }
+
+        public bool GameOver()
+        {
+            return gameOver;
+        }
+
+        public Dictionary<char, bool> GetLetters()
+        {
+            return Letters;
         }
     }
 }

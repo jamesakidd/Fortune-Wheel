@@ -6,26 +6,26 @@ using System.Drawing.Text;
 using System.Media;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using FortuneWheelLibrary;
 
 namespace FortuneWheel
 {
-    public partial class PrizeWheel : Form
+    public partial class PrizeWheel : Form, ICallback
     {
-        private Wheel wheel = null;
+        Dispatcher thread = Dispatcher.CurrentDispatcher;
+        private IWheel wheel = null;
+        private Player user;
+        private List<Player> players;
         private LinkedList<Image> wheelStates = new LinkedList<Image>();
         private SoundPlayer wheelSound;
         private List<string> prizeValues;
         private GamePanel gamePanel;
 
-        public PrizeWheel()
+        public PrizeWheel(IWheel w)
         {
-
+            wheel = w;
             InitializeComponent();
-
-            wheel = new Wheel(); // **************will need to be changed to create a Duplex channel instead ***********************
-            wheel.AddPlayer(new Player("Player 1")); // probably move this somewhere else and certainly not hardcode it.
-            wheel.AddPlayer(new Player("Player 2")); // probably move this somewhere else and certainly not hardcode it.
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -51,7 +51,7 @@ namespace FortuneWheel
         private void LoadPrizeValues()
         {
             prizeValues = new List<string>();
-            foreach (int i in wheel.WheelPrizes)
+            foreach (int i in wheel.GetPrizes())
             {
                 prizeValues.Add($"{i:C0}");
             }
@@ -87,7 +87,7 @@ namespace FortuneWheel
             }
 
             int wheelPosition  = spins % 8;
-            wheel.CurrentPrize = wheelPosition == 0 ? wheel.WheelPrizes[wheelPosition] : wheel.WheelPrizes[wheelPosition - 1]; 
+            wheel.SetPrize(wheelPosition == 0 ? wheel.GetPrizes()[wheelPosition] : wheel.GetPrizes()[wheelPosition - 1]); 
             Thread.Sleep(1200);
             e.Dispose();
         }
@@ -95,9 +95,7 @@ namespace FortuneWheel
         private void button1_Click(object sender, EventArgs e)
         {
             SpinWheel();
-            gamePanel ??= new GamePanel(wheel);
-            Hide();
-            gamePanel.Show();
+            Close();
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
@@ -139,6 +137,26 @@ namespace FortuneWheel
 
             // Draw the text.
             gr.DrawString(txt, font, brush, rotated_bounds, string_format);
+        }
+
+        private delegate void GuiUpdateDelegate(Player[] messages);
+        // Do updates and such here
+        public void PlayersUpdated(Player[] messages)
+        {
+
+            if (thread.Thread == System.Threading.Thread.CurrentThread)
+            {
+                try
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
         }
     }
 }
