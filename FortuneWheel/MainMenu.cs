@@ -54,22 +54,23 @@ namespace FortuneWheel
 
         private delegate void GuiUpdateDelegate(Player[] messages);
         /// <summary>
-        /// ???
+        /// Callback method that updates the players UI or forwards the callback to the appropriate form
         /// </summary>
-        /// <param name="messages"></param>
+        /// <param name="messages">Contains updated player info</param>
         public void PlayersUpdated(Player[] messages)
         {
-
             if (thread.Thread == Thread.CurrentThread)
             {
+                // If the game has started, forward the callback message to the game panels callback handler
                 if (GameStarted)
                 {
                     BeginInvoke(new GuiUpdateDelegate(gamePanel.PlayersUpdated), new object[] { messages });
                 }
+                // Otherwise update the UI
                 try
                 {
                     players = messages.ToList();
-                    PlayersUpdated();
+                    UpdatePlayers();
                 }
                 catch (Exception ex)
                 {
@@ -81,38 +82,33 @@ namespace FortuneWheel
         }
 
         /// <summary>
-        /// ???
+        /// Updates the players UI when a player joins or ready status changes
+        /// When all players are ready (min 2) it will start the game
         /// </summary>
-        private void PlayersUpdated()
+        private void UpdatePlayers()
         {
-            if (thread.Thread == Thread.CurrentThread)
+            int readyPlayers = 0;
+            // update the ui
+            for (int i = 0; i <= playerLabels.Count; i++)
             {
-                if (GameStarted)
+                if (players.Count <= i)
                 {
-                    BeginInvoke(new GuiUpdateDelegate(gamePanel.PlayersUpdated), new object[] { players.ToArray() });
+                    break;
                 }
-                int readyPlayers = 0;
-                for (int i = 0; i <= playerLabels.Count; i++)
-                {
-                    if (players.Count <= i)
-                    {
-                        break;
-                    }
-                    string ready = players[i].isReady ? "(Ready)" : "(Not Ready)";
-                    readyPlayers += players[i].isReady ? 1 : 0;
-                    playerLabels[i].Text = $@"{players[i]} {ready}";
-                }
-                if (readyPlayers >= 2 && readyPlayers == players.Count)
-                {
-                    GameStarted = true;
-                    Hide();
-                    gamePanel ??= new GamePanel(wheel, players, user);
-                    gamePanel.Show();
-                    gamePanel.FormClosed += (_, _) => Close();
-                }
+                string ready = players[i].isReady ? "(Ready)" : "(Not Ready)";
+                readyPlayers += players[i].isReady ? 1 : 0;
+                playerLabels[i].Text = $@"{players[i]} {ready}";
             }
-            else
-                BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { players.ToArray() });
+            // when ready condition is met, start the game
+            if (readyPlayers >= 2 && readyPlayers == players.Count)
+            {
+                GameStarted = true;
+                Hide();
+                gamePanel ??= new GamePanel(wheel, players, user);
+                gamePanel.Show();
+                gamePanel.FormClosed += (_, _) => Close();
+            }
+            
         }
 
         /*
@@ -127,7 +123,7 @@ namespace FortuneWheel
          */
 
         /// <summary>
-        /// ???
+        /// Button event handler to send a request for the user to join the game
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -135,14 +131,17 @@ namespace FortuneWheel
         {
             try
             {
+                // Create the channel
                 DuplexChannelFactory<IWheel> channel = new DuplexChannelFactory<IWheel>(this, "WheelService");
                 wheel = channel.CreateChannel();
+                // if the user is added update ui
                 if (wheel.AddPlayer(textBox_UserName.Text, out user))
                 {
                     players = wheel.GetAllPlayers().ToList();
-                    PlayersUpdated();
+                    UpdatePlayers();
                     button_join.Enabled = false;
                 }
+                // otherwise show an error message
                 else
                 {
                     if (wheel.GetAllPlayers().Length == MAX_PLAYERS)
@@ -170,7 +169,7 @@ namespace FortuneWheel
         {
             user.isReady = !user.isReady;
             wheel.UpdatePlayer(user);
-            PlayersUpdated();
+            UpdatePlayers();
         }
     }
 }

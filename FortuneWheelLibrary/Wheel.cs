@@ -196,9 +196,9 @@ namespace FortuneWheelLibrary
         /// <summary>
         /// Adds and validates a new player to the game
         /// </summary>
-        /// <param name="name">???</param>
-        /// <param name="p">???</param>
-        /// <returns></returns>
+        /// <param name="name">Name of the player to be created</param>
+        /// <param name="p">Player varible to be created and returned in the method</param>
+        /// <returns>boolean representing if the player was created succesfully</returns>
         public bool AddPlayer(string name, out Player p)
         {
             p = null;
@@ -207,12 +207,14 @@ namespace FortuneWheelLibrary
                 return false;
             else
             {
+                // Create the player and add them to the list
                 p = new Player(name);
                 Players.Add(p);
                 // Retrieve client's callback proxy
                 ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
                 // Save alias and callback proxy
                 callbacks.Add(p.Name.ToUpper(), cb);
+                // update users
                 updateAllUsers();
                 return true;
             }
@@ -235,7 +237,7 @@ namespace FortuneWheelLibrary
         }
 
         /// <summary>
-        /// ???
+        ///Triggers all clients callback contracts
         /// </summary>
         private void updateAllUsers()
         {

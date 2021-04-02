@@ -17,7 +17,7 @@ using FortuneWheelLibrary;
 
 namespace FortuneWheel
 {
-    public partial class PrizeWheel : Form, ICallback
+    public partial class PrizeWheel : Form
     {
         Dispatcher thread = Dispatcher.CurrentDispatcher;
         private IWheel wheel;
@@ -192,27 +192,5 @@ namespace FortuneWheel
             e.Dispose();
         }
 
-        private delegate void GuiUpdateDelegate(Player[] messages);
-        /// <summary>
-        /// ???
-        /// </summary>
-        /// <param name="messages">???</param>
-        public void PlayersUpdated(Player[] messages)
-        {
-
-            if (thread.Thread == Thread.CurrentThread)
-            {
-                try
-                {
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-            }
-            else
-                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
-        }
     }
 }
