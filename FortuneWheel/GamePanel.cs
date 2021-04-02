@@ -210,15 +210,16 @@ namespace FortuneWheel
 
         private delegate void GuiUpdateDelegate(Player[] messages);
         /// <summary>
-        /// ???
+        /// Callback method that updates the players UI and declares a winner if applicable
         /// </summary>
-        /// <param name="messages"></param>
+        /// <param name="messages">Contains updated player info</param>
         public void PlayersUpdated(Player[] messages)
         {
             if (thread.Thread == System.Threading.Thread.CurrentThread)
             {
                 try
                 {
+                    // If game is over
                     if (wheel.GameOver())
                     {
                         try
@@ -234,6 +235,8 @@ namespace FortuneWheel
 
                         Close();
                     }
+                    // if the wheel is spinning do not update the current player
+                    // otherwise the GUI will attempt to make additional threads and display errors
                     if (!isSpinning)
                         GetCurrentPlayer();
                     players = messages.ToList();
