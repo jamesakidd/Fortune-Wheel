@@ -562,6 +562,7 @@ namespace FortuneWheel
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lbl_Category);
             this.Controls.Add(this.lbl_PuzzleDisplay);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GamePanel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
