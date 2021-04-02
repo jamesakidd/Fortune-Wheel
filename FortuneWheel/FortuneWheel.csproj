@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="wheel\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FortuneWheelLibrary\FortuneWheelLibrary.csproj" />
   </ItemGroup>
 

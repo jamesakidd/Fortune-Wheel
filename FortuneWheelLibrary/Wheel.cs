@@ -46,6 +46,9 @@ namespace FortuneWheelLibrary
         bool GameOver();
         [OperationContract]
         Dictionary<char, bool> GetLetters();
+
+        [OperationContract]
+        string GetCurrentPhrase();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -345,6 +348,11 @@ namespace FortuneWheelLibrary
         public Dictionary<char, bool> GetLetters()
         {
             return Letters;
+        }
+
+        public string GetCurrentPhrase()
+        {
+            return CurrentPhrase;
         }
     }
 }

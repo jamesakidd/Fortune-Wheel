@@ -74,7 +74,7 @@ namespace FortuneWheel
             // 
             // lbl_PuzzleDisplay
             // 
-            this.lbl_PuzzleDisplay.Font = new System.Drawing.Font("SimSun", 60F, System.Drawing.FontStyle.Bold);
+            this.lbl_PuzzleDisplay.Font = new System.Drawing.Font("SimSun", 50F, System.Drawing.FontStyle.Bold);
             this.lbl_PuzzleDisplay.Location = new System.Drawing.Point(27, 89);
             this.lbl_PuzzleDisplay.Name = "lbl_PuzzleDisplay";
             this.lbl_PuzzleDisplay.Size = new System.Drawing.Size(706, 381);

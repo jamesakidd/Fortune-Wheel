@@ -226,7 +226,11 @@ namespace FortuneWheel
                         {
                             Player winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
                             winnerSound.Play();
-                            MessageBox.Show($@"Game over. {winner} won with {winner.Score:C0}!");
+                            //MessageBox.Show($@"Game over. {winner} won with {winner.Score:C0}!");
+
+                            EndGameDialog endDialog = new EndGameDialog(wheel);
+                            endDialog.ShowDialog(this);
+
                         }
                         catch (Exception ex)
                         {
