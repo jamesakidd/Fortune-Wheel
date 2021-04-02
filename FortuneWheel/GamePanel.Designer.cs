@@ -74,20 +74,21 @@ namespace FortuneWheel
             // 
             // lbl_PuzzleDisplay
             // 
-            this.lbl_PuzzleDisplay.Font = new System.Drawing.Font("SimSun", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_PuzzleDisplay.Location = new System.Drawing.Point(32, 103);
+            this.lbl_PuzzleDisplay.Font = new System.Drawing.Font("SimSun", 60F, System.Drawing.FontStyle.Bold);
+            this.lbl_PuzzleDisplay.Location = new System.Drawing.Point(27, 89);
             this.lbl_PuzzleDisplay.Name = "lbl_PuzzleDisplay";
-            this.lbl_PuzzleDisplay.Size = new System.Drawing.Size(824, 440);
+            this.lbl_PuzzleDisplay.Size = new System.Drawing.Size(706, 381);
             this.lbl_PuzzleDisplay.TabIndex = 0;
+            this.lbl_PuzzleDisplay.UseMnemonic = false;
             // 
             // lbl_Category
             // 
             this.lbl_Category.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_Category.Font = new System.Drawing.Font("SimSun", 48F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lbl_Category.Font = new System.Drawing.Font("SimSun", 48F, System.Drawing.FontStyle.Bold);
             this.lbl_Category.ForeColor = System.Drawing.Color.DarkSlateGray;
-            this.lbl_Category.Location = new System.Drawing.Point(32, 525);
+            this.lbl_Category.Location = new System.Drawing.Point(27, 455);
             this.lbl_Category.Name = "lbl_Category";
-            this.lbl_Category.Size = new System.Drawing.Size(824, 101);
+            this.lbl_Category.Size = new System.Drawing.Size(706, 88);
             this.lbl_Category.TabIndex = 1;
             this.lbl_Category.Text = "A Test Category";
             this.lbl_Category.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -134,20 +135,20 @@ namespace FortuneWheel
             this.tableLayoutPanel1.Controls.Add(this.btn_B, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn_A, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn_M, 12, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(32, 652);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(27, 565);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(824, 100);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(706, 87);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // btn_Z
             // 
-            this.btn_Z.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_Z.Location = new System.Drawing.Point(759, 53);
+            this.btn_Z.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_Z.Location = new System.Drawing.Point(651, 46);
             this.btn_Z.Name = "btn_Z";
-            this.btn_Z.Size = new System.Drawing.Size(57, 43);
+            this.btn_Z.Size = new System.Drawing.Size(49, 37);
             this.btn_Z.TabIndex = 25;
             this.btn_Z.Text = "Z";
             this.btn_Z.UseVisualStyleBackColor = true;
@@ -155,10 +156,10 @@ namespace FortuneWheel
             // 
             // btn_Y
             // 
-            this.btn_Y.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_Y.Location = new System.Drawing.Point(696, 53);
+            this.btn_Y.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_Y.Location = new System.Drawing.Point(597, 46);
             this.btn_Y.Name = "btn_Y";
-            this.btn_Y.Size = new System.Drawing.Size(57, 43);
+            this.btn_Y.Size = new System.Drawing.Size(48, 37);
             this.btn_Y.TabIndex = 24;
             this.btn_Y.Text = "Y";
             this.btn_Y.UseVisualStyleBackColor = true;
@@ -166,10 +167,10 @@ namespace FortuneWheel
             // 
             // btn_X
             // 
-            this.btn_X.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_X.Location = new System.Drawing.Point(633, 53);
+            this.btn_X.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_X.Location = new System.Drawing.Point(543, 46);
             this.btn_X.Name = "btn_X";
-            this.btn_X.Size = new System.Drawing.Size(57, 43);
+            this.btn_X.Size = new System.Drawing.Size(48, 37);
             this.btn_X.TabIndex = 23;
             this.btn_X.Text = "X";
             this.btn_X.UseVisualStyleBackColor = true;
@@ -177,10 +178,10 @@ namespace FortuneWheel
             // 
             // btn_W
             // 
-            this.btn_W.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_W.Location = new System.Drawing.Point(570, 53);
+            this.btn_W.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_W.Location = new System.Drawing.Point(489, 46);
             this.btn_W.Name = "btn_W";
-            this.btn_W.Size = new System.Drawing.Size(57, 43);
+            this.btn_W.Size = new System.Drawing.Size(48, 37);
             this.btn_W.TabIndex = 22;
             this.btn_W.Text = "W";
             this.btn_W.UseVisualStyleBackColor = true;
@@ -188,10 +189,10 @@ namespace FortuneWheel
             // 
             // btn_V
             // 
-            this.btn_V.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_V.Location = new System.Drawing.Point(507, 53);
+            this.btn_V.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_V.Location = new System.Drawing.Point(435, 46);
             this.btn_V.Name = "btn_V";
-            this.btn_V.Size = new System.Drawing.Size(57, 43);
+            this.btn_V.Size = new System.Drawing.Size(48, 37);
             this.btn_V.TabIndex = 21;
             this.btn_V.Text = "V";
             this.btn_V.UseVisualStyleBackColor = true;
@@ -199,10 +200,10 @@ namespace FortuneWheel
             // 
             // btn_U
             // 
-            this.btn_U.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_U.Location = new System.Drawing.Point(444, 53);
+            this.btn_U.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_U.Location = new System.Drawing.Point(381, 46);
             this.btn_U.Name = "btn_U";
-            this.btn_U.Size = new System.Drawing.Size(57, 43);
+            this.btn_U.Size = new System.Drawing.Size(48, 37);
             this.btn_U.TabIndex = 20;
             this.btn_U.Text = "U";
             this.btn_U.UseVisualStyleBackColor = true;
@@ -210,10 +211,10 @@ namespace FortuneWheel
             // 
             // btn_T
             // 
-            this.btn_T.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_T.Location = new System.Drawing.Point(381, 53);
+            this.btn_T.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_T.Location = new System.Drawing.Point(327, 46);
             this.btn_T.Name = "btn_T";
-            this.btn_T.Size = new System.Drawing.Size(57, 43);
+            this.btn_T.Size = new System.Drawing.Size(48, 37);
             this.btn_T.TabIndex = 19;
             this.btn_T.Text = "T";
             this.btn_T.UseVisualStyleBackColor = true;
@@ -221,10 +222,10 @@ namespace FortuneWheel
             // 
             // btn_S
             // 
-            this.btn_S.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_S.Location = new System.Drawing.Point(318, 53);
+            this.btn_S.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_S.Location = new System.Drawing.Point(273, 46);
             this.btn_S.Name = "btn_S";
-            this.btn_S.Size = new System.Drawing.Size(57, 43);
+            this.btn_S.Size = new System.Drawing.Size(48, 37);
             this.btn_S.TabIndex = 18;
             this.btn_S.Text = "S";
             this.btn_S.UseVisualStyleBackColor = true;
@@ -232,10 +233,10 @@ namespace FortuneWheel
             // 
             // btn_R
             // 
-            this.btn_R.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_R.Location = new System.Drawing.Point(255, 53);
+            this.btn_R.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_R.Location = new System.Drawing.Point(219, 46);
             this.btn_R.Name = "btn_R";
-            this.btn_R.Size = new System.Drawing.Size(57, 43);
+            this.btn_R.Size = new System.Drawing.Size(48, 37);
             this.btn_R.TabIndex = 17;
             this.btn_R.Text = "R";
             this.btn_R.UseVisualStyleBackColor = true;
@@ -243,10 +244,10 @@ namespace FortuneWheel
             // 
             // btn_Q
             // 
-            this.btn_Q.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_Q.Location = new System.Drawing.Point(192, 53);
+            this.btn_Q.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_Q.Location = new System.Drawing.Point(165, 46);
             this.btn_Q.Name = "btn_Q";
-            this.btn_Q.Size = new System.Drawing.Size(57, 43);
+            this.btn_Q.Size = new System.Drawing.Size(48, 37);
             this.btn_Q.TabIndex = 16;
             this.btn_Q.Text = "Q";
             this.btn_Q.UseVisualStyleBackColor = true;
@@ -254,10 +255,10 @@ namespace FortuneWheel
             // 
             // btn_P
             // 
-            this.btn_P.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_P.Location = new System.Drawing.Point(129, 53);
+            this.btn_P.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_P.Location = new System.Drawing.Point(111, 46);
             this.btn_P.Name = "btn_P";
-            this.btn_P.Size = new System.Drawing.Size(57, 43);
+            this.btn_P.Size = new System.Drawing.Size(48, 37);
             this.btn_P.TabIndex = 15;
             this.btn_P.Text = "P";
             this.btn_P.UseVisualStyleBackColor = true;
@@ -265,10 +266,10 @@ namespace FortuneWheel
             // 
             // btn_O
             // 
-            this.btn_O.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_O.Location = new System.Drawing.Point(66, 53);
+            this.btn_O.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_O.Location = new System.Drawing.Point(57, 46);
             this.btn_O.Name = "btn_O";
-            this.btn_O.Size = new System.Drawing.Size(57, 43);
+            this.btn_O.Size = new System.Drawing.Size(48, 37);
             this.btn_O.TabIndex = 14;
             this.btn_O.Text = "O";
             this.btn_O.UseVisualStyleBackColor = true;
@@ -276,10 +277,10 @@ namespace FortuneWheel
             // 
             // btn_N
             // 
-            this.btn_N.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_N.Location = new System.Drawing.Point(3, 53);
+            this.btn_N.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_N.Location = new System.Drawing.Point(3, 46);
             this.btn_N.Name = "btn_N";
-            this.btn_N.Size = new System.Drawing.Size(57, 43);
+            this.btn_N.Size = new System.Drawing.Size(48, 37);
             this.btn_N.TabIndex = 13;
             this.btn_N.Text = "N";
             this.btn_N.UseVisualStyleBackColor = true;
@@ -287,10 +288,10 @@ namespace FortuneWheel
             // 
             // btn_L
             // 
-            this.btn_L.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_L.Location = new System.Drawing.Point(696, 3);
+            this.btn_L.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_L.Location = new System.Drawing.Point(597, 3);
             this.btn_L.Name = "btn_L";
-            this.btn_L.Size = new System.Drawing.Size(57, 43);
+            this.btn_L.Size = new System.Drawing.Size(48, 37);
             this.btn_L.TabIndex = 11;
             this.btn_L.Text = "L";
             this.btn_L.UseVisualStyleBackColor = true;
@@ -298,10 +299,10 @@ namespace FortuneWheel
             // 
             // btn_K
             // 
-            this.btn_K.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_K.Location = new System.Drawing.Point(633, 3);
+            this.btn_K.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_K.Location = new System.Drawing.Point(543, 3);
             this.btn_K.Name = "btn_K";
-            this.btn_K.Size = new System.Drawing.Size(57, 43);
+            this.btn_K.Size = new System.Drawing.Size(48, 37);
             this.btn_K.TabIndex = 10;
             this.btn_K.Text = "K";
             this.btn_K.UseVisualStyleBackColor = true;
@@ -309,10 +310,10 @@ namespace FortuneWheel
             // 
             // btn_J
             // 
-            this.btn_J.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_J.Location = new System.Drawing.Point(570, 3);
+            this.btn_J.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_J.Location = new System.Drawing.Point(489, 3);
             this.btn_J.Name = "btn_J";
-            this.btn_J.Size = new System.Drawing.Size(57, 43);
+            this.btn_J.Size = new System.Drawing.Size(48, 37);
             this.btn_J.TabIndex = 9;
             this.btn_J.Text = "J";
             this.btn_J.UseVisualStyleBackColor = true;
@@ -320,10 +321,10 @@ namespace FortuneWheel
             // 
             // btn_I
             // 
-            this.btn_I.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_I.Location = new System.Drawing.Point(507, 3);
+            this.btn_I.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_I.Location = new System.Drawing.Point(435, 3);
             this.btn_I.Name = "btn_I";
-            this.btn_I.Size = new System.Drawing.Size(57, 43);
+            this.btn_I.Size = new System.Drawing.Size(48, 37);
             this.btn_I.TabIndex = 8;
             this.btn_I.Text = "I";
             this.btn_I.UseVisualStyleBackColor = true;
@@ -331,10 +332,10 @@ namespace FortuneWheel
             // 
             // btn_H
             // 
-            this.btn_H.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_H.Location = new System.Drawing.Point(444, 3);
+            this.btn_H.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_H.Location = new System.Drawing.Point(381, 3);
             this.btn_H.Name = "btn_H";
-            this.btn_H.Size = new System.Drawing.Size(57, 43);
+            this.btn_H.Size = new System.Drawing.Size(48, 37);
             this.btn_H.TabIndex = 7;
             this.btn_H.Text = "H";
             this.btn_H.UseVisualStyleBackColor = true;
@@ -342,10 +343,10 @@ namespace FortuneWheel
             // 
             // btn_G
             // 
-            this.btn_G.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_G.Location = new System.Drawing.Point(381, 3);
+            this.btn_G.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_G.Location = new System.Drawing.Point(327, 3);
             this.btn_G.Name = "btn_G";
-            this.btn_G.Size = new System.Drawing.Size(57, 43);
+            this.btn_G.Size = new System.Drawing.Size(48, 37);
             this.btn_G.TabIndex = 6;
             this.btn_G.Text = "G";
             this.btn_G.UseVisualStyleBackColor = true;
@@ -353,10 +354,10 @@ namespace FortuneWheel
             // 
             // btn_F
             // 
-            this.btn_F.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_F.Location = new System.Drawing.Point(318, 3);
+            this.btn_F.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_F.Location = new System.Drawing.Point(273, 3);
             this.btn_F.Name = "btn_F";
-            this.btn_F.Size = new System.Drawing.Size(57, 43);
+            this.btn_F.Size = new System.Drawing.Size(48, 37);
             this.btn_F.TabIndex = 5;
             this.btn_F.Text = "F";
             this.btn_F.UseVisualStyleBackColor = true;
@@ -364,10 +365,10 @@ namespace FortuneWheel
             // 
             // btn_E
             // 
-            this.btn_E.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_E.Location = new System.Drawing.Point(255, 3);
+            this.btn_E.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_E.Location = new System.Drawing.Point(219, 3);
             this.btn_E.Name = "btn_E";
-            this.btn_E.Size = new System.Drawing.Size(57, 43);
+            this.btn_E.Size = new System.Drawing.Size(48, 37);
             this.btn_E.TabIndex = 4;
             this.btn_E.Text = "E";
             this.btn_E.UseVisualStyleBackColor = true;
@@ -375,10 +376,10 @@ namespace FortuneWheel
             // 
             // btn_D
             // 
-            this.btn_D.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_D.Location = new System.Drawing.Point(192, 3);
+            this.btn_D.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_D.Location = new System.Drawing.Point(165, 3);
             this.btn_D.Name = "btn_D";
-            this.btn_D.Size = new System.Drawing.Size(57, 43);
+            this.btn_D.Size = new System.Drawing.Size(48, 37);
             this.btn_D.TabIndex = 3;
             this.btn_D.Text = "D";
             this.btn_D.UseVisualStyleBackColor = true;
@@ -386,10 +387,10 @@ namespace FortuneWheel
             // 
             // btn_C
             // 
-            this.btn_C.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_C.Location = new System.Drawing.Point(129, 3);
+            this.btn_C.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_C.Location = new System.Drawing.Point(111, 3);
             this.btn_C.Name = "btn_C";
-            this.btn_C.Size = new System.Drawing.Size(57, 43);
+            this.btn_C.Size = new System.Drawing.Size(48, 37);
             this.btn_C.TabIndex = 2;
             this.btn_C.Text = "C";
             this.btn_C.UseVisualStyleBackColor = true;
@@ -397,10 +398,10 @@ namespace FortuneWheel
             // 
             // btn_B
             // 
-            this.btn_B.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_B.Location = new System.Drawing.Point(66, 3);
+            this.btn_B.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_B.Location = new System.Drawing.Point(57, 3);
             this.btn_B.Name = "btn_B";
-            this.btn_B.Size = new System.Drawing.Size(57, 43);
+            this.btn_B.Size = new System.Drawing.Size(48, 37);
             this.btn_B.TabIndex = 1;
             this.btn_B.Text = "B";
             this.btn_B.UseVisualStyleBackColor = true;
@@ -408,10 +409,10 @@ namespace FortuneWheel
             // 
             // btn_A
             // 
-            this.btn_A.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_A.Font = new System.Drawing.Font("Segoe UI", 18F);
             this.btn_A.Location = new System.Drawing.Point(3, 3);
             this.btn_A.Name = "btn_A";
-            this.btn_A.Size = new System.Drawing.Size(57, 43);
+            this.btn_A.Size = new System.Drawing.Size(48, 37);
             this.btn_A.TabIndex = 0;
             this.btn_A.Text = "A";
             this.btn_A.UseVisualStyleBackColor = true;
@@ -419,10 +420,10 @@ namespace FortuneWheel
             // 
             // btn_M
             // 
-            this.btn_M.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_M.Location = new System.Drawing.Point(759, 3);
+            this.btn_M.Font = new System.Drawing.Font("Segoe UI", 18F);
+            this.btn_M.Location = new System.Drawing.Point(651, 3);
             this.btn_M.Name = "btn_M";
-            this.btn_M.Size = new System.Drawing.Size(57, 43);
+            this.btn_M.Size = new System.Drawing.Size(49, 37);
             this.btn_M.TabIndex = 12;
             this.btn_M.Text = "M";
             this.btn_M.UseVisualStyleBackColor = true;
@@ -431,20 +432,20 @@ namespace FortuneWheel
             // lbl_CurrentPrize
             // 
             this.lbl_CurrentPrize.BackColor = System.Drawing.Color.Transparent;
-            this.lbl_CurrentPrize.Font = new System.Drawing.Font("Bernard MT Condensed", 60F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_CurrentPrize.Location = new System.Drawing.Point(35, 13);
+            this.lbl_CurrentPrize.Font = new System.Drawing.Font("Bernard MT Condensed", 60F, System.Drawing.FontStyle.Bold);
+            this.lbl_CurrentPrize.Location = new System.Drawing.Point(30, -11);
             this.lbl_CurrentPrize.Name = "lbl_CurrentPrize";
-            this.lbl_CurrentPrize.Size = new System.Drawing.Size(821, 90);
+            this.lbl_CurrentPrize.Size = new System.Drawing.Size(704, 100);
             this.lbl_CurrentPrize.TabIndex = 3;
             this.lbl_CurrentPrize.Text = "$0,000";
-            this.lbl_CurrentPrize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbl_CurrentPrize.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // lbl_Player1
             // 
-            this.lbl_Player1.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player1.Location = new System.Drawing.Point(9, 758);
+            this.lbl_Player1.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player1.Location = new System.Drawing.Point(8, 657);
             this.lbl_Player1.Name = "lbl_Player1";
-            this.lbl_Player1.Size = new System.Drawing.Size(173, 44);
+            this.lbl_Player1.Size = new System.Drawing.Size(148, 38);
             this.lbl_Player1.TabIndex = 4;
             this.lbl_Player1.Text = "Test Player1";
             this.lbl_Player1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -452,10 +453,10 @@ namespace FortuneWheel
             // 
             // lbl_Player2
             // 
-            this.lbl_Player2.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player2.Location = new System.Drawing.Point(176, 758);
+            this.lbl_Player2.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player2.Location = new System.Drawing.Point(151, 657);
             this.lbl_Player2.Name = "lbl_Player2";
-            this.lbl_Player2.Size = new System.Drawing.Size(183, 44);
+            this.lbl_Player2.Size = new System.Drawing.Size(157, 38);
             this.lbl_Player2.TabIndex = 5;
             this.lbl_Player2.Text = "Test Player2";
             this.lbl_Player2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -463,10 +464,10 @@ namespace FortuneWheel
             // 
             // lbl_Player4
             // 
-            this.lbl_Player4.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player4.Location = new System.Drawing.Point(700, 758);
+            this.lbl_Player4.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player4.Location = new System.Drawing.Point(600, 657);
             this.lbl_Player4.Name = "lbl_Player4";
-            this.lbl_Player4.Size = new System.Drawing.Size(183, 44);
+            this.lbl_Player4.Size = new System.Drawing.Size(157, 38);
             this.lbl_Player4.TabIndex = 7;
             this.lbl_Player4.Text = "Test Player4";
             this.lbl_Player4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -474,10 +475,10 @@ namespace FortuneWheel
             // 
             // lbl_Player3
             // 
-            this.lbl_Player3.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player3.Location = new System.Drawing.Point(536, 758);
+            this.lbl_Player3.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player3.Location = new System.Drawing.Point(459, 657);
             this.lbl_Player3.Name = "lbl_Player3";
-            this.lbl_Player3.Size = new System.Drawing.Size(169, 44);
+            this.lbl_Player3.Size = new System.Drawing.Size(145, 38);
             this.lbl_Player3.TabIndex = 6;
             this.lbl_Player3.Text = "Test Player3";
             this.lbl_Player3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -485,12 +486,15 @@ namespace FortuneWheel
             // 
             // btn_answer
             // 
-            this.btn_answer.BackColor = System.Drawing.Color.Gold;
-            this.btn_answer.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btn_answer.Font = new System.Drawing.Font("Bernard MT Condensed", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_answer.Location = new System.Drawing.Point(350, 758);
+            this.btn_answer.BackColor = System.Drawing.Color.Transparent;
+            this.btn_answer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btn_answer.Enabled = false;
+            this.btn_answer.FlatAppearance.BorderSize = 0;
+            this.btn_answer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_answer.Font = new System.Drawing.Font("Bernard MT Condensed", 22F);
+            this.btn_answer.Location = new System.Drawing.Point(290, 657);
             this.btn_answer.Name = "btn_answer";
-            this.btn_answer.Size = new System.Drawing.Size(176, 95);
+            this.btn_answer.Size = new System.Drawing.Size(180, 96);
             this.btn_answer.TabIndex = 8;
             this.btn_answer.Text = "GUESS ANSWER";
             this.btn_answer.UseVisualStyleBackColor = false;
@@ -498,10 +502,10 @@ namespace FortuneWheel
             // 
             // lbl_Player1Score
             // 
-            this.lbl_Player1Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player1Score.Location = new System.Drawing.Point(35, 804);
+            this.lbl_Player1Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player1Score.Location = new System.Drawing.Point(30, 697);
             this.lbl_Player1Score.Name = "lbl_Player1Score";
-            this.lbl_Player1Score.Size = new System.Drawing.Size(120, 28);
+            this.lbl_Player1Score.Size = new System.Drawing.Size(103, 24);
             this.lbl_Player1Score.TabIndex = 9;
             this.lbl_Player1Score.Text = "$0";
             this.lbl_Player1Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -509,10 +513,10 @@ namespace FortuneWheel
             // 
             // lbl_Player2Score
             // 
-            this.lbl_Player2Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player2Score.Location = new System.Drawing.Point(202, 802);
+            this.lbl_Player2Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player2Score.Location = new System.Drawing.Point(173, 695);
             this.lbl_Player2Score.Name = "lbl_Player2Score";
-            this.lbl_Player2Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player2Score.Size = new System.Drawing.Size(111, 28);
             this.lbl_Player2Score.TabIndex = 10;
             this.lbl_Player2Score.Text = "$0";
             this.lbl_Player2Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -520,10 +524,10 @@ namespace FortuneWheel
             // 
             // lbl_Player3Score
             // 
-            this.lbl_Player3Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player3Score.Location = new System.Drawing.Point(555, 802);
+            this.lbl_Player3Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player3Score.Location = new System.Drawing.Point(476, 695);
             this.lbl_Player3Score.Name = "lbl_Player3Score";
-            this.lbl_Player3Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player3Score.Size = new System.Drawing.Size(111, 28);
             this.lbl_Player3Score.TabIndex = 11;
             this.lbl_Player3Score.Text = "$0";
             this.lbl_Player3Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -531,10 +535,10 @@ namespace FortuneWheel
             // 
             // lbl_Player4Score
             // 
-            this.lbl_Player4Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Player4Score.Location = new System.Drawing.Point(726, 802);
+            this.lbl_Player4Score.Font = new System.Drawing.Font("Bernard MT Condensed", 18F);
+            this.lbl_Player4Score.Location = new System.Drawing.Point(622, 695);
             this.lbl_Player4Score.Name = "lbl_Player4Score";
-            this.lbl_Player4Score.Size = new System.Drawing.Size(130, 32);
+            this.lbl_Player4Score.Size = new System.Drawing.Size(111, 28);
             this.lbl_Player4Score.TabIndex = 12;
             this.lbl_Player4Score.Text = "$0";
             this.lbl_Player4Score.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -542,9 +546,9 @@ namespace FortuneWheel
             // 
             // GamePanel
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(888, 865);
+            this.ClientSize = new System.Drawing.Size(761, 750);
             this.Controls.Add(this.lbl_Player4Score);
             this.Controls.Add(this.lbl_Player3Score);
             this.Controls.Add(this.lbl_Player2Score);
@@ -558,8 +562,10 @@ namespace FortuneWheel
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lbl_Category);
             this.Controls.Add(this.lbl_PuzzleDisplay);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GamePanel";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GamePanel";
             this.Load += new System.EventHandler(this.GamePanel_Load);
             this.tableLayoutPanel1.ResumeLayout(false);

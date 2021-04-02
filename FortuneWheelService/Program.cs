@@ -6,7 +6,7 @@ namespace FortuneWheelService
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             ServiceHost servHost = null;
             try
@@ -25,8 +25,7 @@ namespace FortuneWheelService
             finally
             {
                 Console.ReadKey();
-                if (servHost != null)
-                    servHost.Close();
+                servHost?.Close();
             }
         }
     }

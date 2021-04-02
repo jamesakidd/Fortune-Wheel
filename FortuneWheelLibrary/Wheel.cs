@@ -7,6 +7,12 @@ using System.Text;
 using Newtonsoft.Json;
 using System.ServiceModel;
 
+/*
+ * Main Library class for Fortune Wheel game
+ * Authors: Anthony Merante & James Kidd
+ * Date: April 1 - 2021
+ */
+
 namespace FortuneWheelLibrary
 {
     [ServiceContract(CallbackContract = typeof(ICallback))]
@@ -15,7 +21,7 @@ namespace FortuneWheelLibrary
         [OperationContract]
         bool AddPlayer(string name, out Player p);
         [OperationContract]
-        void MakeGuess(char c);
+        bool MakeGuess(char c);
         [OperationContract]
         void GuessAnswer(string playerGuess);
         [OperationContract]
@@ -51,19 +57,26 @@ namespace FortuneWheelLibrary
         public List<Player> Players { get; set; }
         public int CurrentPlayer { get; set; }
         public List<int> WheelPrizes { get; set; }
-        public Dictionary<string, List<string>> Puzzles { get; set; } //Key: Category Value: A List of possible phrases.
-        public Dictionary<char, bool> Letters { get; set; } //A letter and bool for if it's available to play.
-
-
-
+        public Dictionary<string, List<string>> Puzzles { get; set; }
+        public Dictionary<char, bool> Letters { get; set; }
         public int CurrentPrize { get; set; }
         public string CurrentCategory { get; set; }
         public string CurrentPhrase { get; set; }
         public string PuzzleState { get; set; }
         public bool gameOver { get; set; }
 
-
         private const string PUZZLE_FILE = "./fortuneWheelPuzzles.json";
+
+        /*                                                                                                                            
+           88               88              88b           d88                       88                                 88             
+           88               ""    ,d        888b         d888                ,d     88                                 88             
+           88                     88        88`8b       d8'88                88     88                                 88             
+           88  8b,dPPYba,   88  MM88MMM     88 `8b     d8' 88   ,adPPYba,  MM88MMM  88,dPPYba,    ,adPPYba,    ,adPPYb,88  ,adPPYba,  
+           88  88P'   `"8a  88    88        88  `8b   d8'  88  a8P_____88    88     88P'    "8a  a8"     "8a  a8"    `Y88  I8[    ""  
+           88  88       88  88    88        88   `8b d8'   88  8PP"""""""    88     88       88  8b       d8  8b       88   `"Y8ba,   
+           88  88       88  88    88,       88    `888'    88  "8b,   ,aa    88,    88       88  "8a,   ,a8"  "8a,   ,d88  aa    ]8I  
+           88  88       88  88    "Y888     88     `8'     88   `"Ybbd8"'    "Y888  88       88   `"YbbdP"'    `"8bbdP"Y8  `"YbbdP"' 
+         */
 
         public Wheel()
         {
@@ -79,9 +92,11 @@ namespace FortuneWheelLibrary
             SetInitialPuzzleState();
         }
 
+        /// <summary>
+        /// Sets puzzle state string with matching blocks
+        /// </summary>
         private void SetInitialPuzzleState()
         {
-            char square = Convert.ToChar(254);
             PuzzleState = new string(CurrentPhrase.Select(c => c == ' ' ? ' ' : '█').ToArray());
             SetPuzzleState('-');
             SetPuzzleState('&');
@@ -89,6 +104,10 @@ namespace FortuneWheelLibrary
             SetPuzzleState('.');
         }
 
+        /// <summary>
+        /// Will replace any matching blocks in the puzzle state with the given char
+        /// </summary>
+        /// <param name="c">the char to uncover</param>
         private void SetPuzzleState(char c)
         {
             StringBuilder sb = new StringBuilder(PuzzleState);
@@ -104,10 +123,13 @@ namespace FortuneWheelLibrary
             PuzzleState = sb.ToString();
         }
 
+        /// <summary>
+        /// Loads the array used by the prize wheel with various prize values
+        /// </summary>
         private void LoadWheelPrizes()
         {
             WheelPrizes = new List<int>
-            {   
+            {
                 3500,
                 500,
                 750,
@@ -124,8 +146,8 @@ namespace FortuneWheelLibrary
         /// </summary>
         private void PickCurrentPuzzle()
         {
-            int randomCategory = new Random().Next(0, Puzzles.Count);
-            int randomPhrase = new Random().Next(0, Puzzles.ElementAt(randomCategory).Value.Count);
+            int randomCategory = new Random(DateTime.Now.Millisecond).Next(0, Puzzles.Count);
+            int randomPhrase = new Random(DateTime.Now.Millisecond).Next(0, Puzzles.ElementAt(randomCategory).Value.Count);
 
             CurrentCategory = Puzzles.ElementAt(randomCategory).Key;
             CurrentPhrase = Puzzles.ElementAt(randomCategory).Value[randomPhrase];
@@ -145,7 +167,7 @@ namespace FortuneWheelLibrary
             {
                 Debug.WriteLine($"ERROR LOADING PUZZLE FILE: {ex.Message}");
             }
-            
+
         }
 
         /// <summary>
@@ -159,10 +181,24 @@ namespace FortuneWheelLibrary
             }
         }
 
+        /*                                                                                             
+          .g8"""bgd                                      `7MMF'                            db          
+        .dP'     `M                                        MM                                          
+        dM'       `  ,6"Yb. `7MMpMMMb.pMMMb.  .gP"Ya       MM         ,pW"Wq.   .P"Ybmmm `7MM  ,p6"bo  
+        MM          8)   MM   MM    MM    MM ,M'   Yb      MM        6W'   `Wb :MI  I8     MM 6M'  OO  
+        MM.    `7MMF',pm9MM   MM    MM    MM 8M""""""      MM      , 8M     M8  WmmmP"     MM 8M       
+        `Mb.     MM 8M   MM   MM    MM    MM YM.    ,      MM     ,M YA.   ,A9 8M          MM YM.    , 
+          `"bmmmdPY `Moo9^Yo.JMML  JMML  JMML.`Mbmmd'    .JMMmmmmMMM  `Ybmd9'   YMMMMMb  .JMML.YMbmd'  
+                                                                               6'     dP               
+                                                                               Ybmmmd'      
+        */
+
         /// <summary>
-        /// Adds a player to the list of players
+        /// Adds and validates a new player to the game
         /// </summary>
-        /// <param name="player">The player to be added</param>
+        /// <param name="name">???</param>
+        /// <param name="p">???</param>
+        /// <returns></returns>
         public bool AddPlayer(string name, out Player p)
         {
             p = null;
@@ -182,6 +218,25 @@ namespace FortuneWheelLibrary
             }
         }
 
+        /// <summary>
+        /// Increments current player
+        /// </summary>
+        public void NextPlayer()
+        {
+            if (CurrentPlayer + 1 >= Players.Count)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                CurrentPlayer++;
+            }
+            updateAllUsers();
+        }
+
+        /// <summary>
+        /// ???
+        /// </summary>
         private void updateAllUsers()
         {
             Player[] msgs = GetAllPlayers();
@@ -189,33 +244,65 @@ namespace FortuneWheelLibrary
                 cb.PlayersUpdated(msgs);
         }
 
-        public void MakeGuess(char c)
-        {
-            Letters[c] = false;
-            int count = CurrentPhrase.ToUpper().Count(f => f == c);
-            if(count > 0)
-                SetPuzzleState(c);
-
-            Players[CurrentPlayer].Score += CurrentPrize * count;
-        }
-
-        public void GuessAnswer(string playerGuess)
-        {
-            gameOver = string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase);
-            updateAllUsers();
-        }
-
-        public Player[] GetAllPlayers()
-        {
-            return this.Players.ToArray();
-        }
-
+        /// <summary>
+        /// Updates the given player
+        /// </summary>
+        /// <param name="p">The player to update</param>
         public void UpdatePlayer(Player p)
         {
             Player play = Players.FirstOrDefault(player => player.Name == p.Name);
             play.Score = p.Score;
             play.isReady = p.isReady;
             updateAllUsers();
+        }
+
+        /// <summary>
+        /// Counts instances of given char in current puzzle
+        /// </summary>
+        /// <param name="c">The char the player has guessed</param>
+        /// <returns>True - if count > 0</returns>
+        public bool MakeGuess(char c)
+        {
+            Letters[c] = false;
+            int count = CurrentPhrase.ToUpper().Count(f => f == c);
+            Players[CurrentPlayer].Score += CurrentPrize * count;
+            if (count <= 0) return false;
+            SetPuzzleState(c);
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if a player's solution guess matches the current puzzle. If so - add current prize X remaining hidden letters to player's score.
+        /// </summary>
+        /// <param name="playerGuess">The string that the player has entered as a guess</param>
+        public void GuessAnswer(string playerGuess)
+        {
+            if (string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase))
+            {
+                int remainingBlocks = Enumerable.Range(0, CurrentPhrase.Length)
+                    .Count(i => PuzzleState[i] != CurrentPhrase[i]);
+
+                Players[CurrentPlayer].Score += CurrentPrize * remainingBlocks;
+                gameOver = true;
+            }
+            updateAllUsers();
+        }
+
+
+        /*
+        .g8"""bgd            mm     mm                           
+        .dP'     `M            MM     MM                           
+        dM'       `   .gP"Ya mmMMmm mmMMmm .gP"Ya `7Mb,od8 ,pP"Ybd 
+        MM           ,M'   Yb  MM     MM  ,M'   Yb  MM' "' 8I   `" 
+        MM.    `7MMF'8M""""""  MM     MM  8M""""""  MM     `YMMMa. 
+        `Mb.     MM  YM.    ,  MM     MM  YM.    ,  MM     L.   I8 
+        `"bmmmdPY   `Mbmmd'  `Mbmo  `Mbmo`Mbmmd'.JMML.   M9mmmP' 
+        */
+
+
+        public Player[] GetAllPlayers()
+        {
+            return this.Players.ToArray();
         }
 
         int IWheel.CurrentPrize()
@@ -248,24 +335,10 @@ namespace FortuneWheelLibrary
             return Players[CurrentPlayer];
         }
 
-        public void NextPlayer()
-        {
-            if (CurrentPlayer+1 >= Players.Count)
-            {
-                CurrentPlayer = 0;
-            }
-            else
-            {
-                CurrentPlayer++;
-            }
-            updateAllUsers();
-        }
-
         public bool GameOver()
         {
             return gameOver;
         }
-
         public Dictionary<char, bool> GetLetters()
         {
             return Letters;
