@@ -281,8 +281,9 @@ namespace FortuneWheelLibrary
         {
             if (string.Equals(CurrentPhrase, playerGuess, StringComparison.CurrentCultureIgnoreCase))
             {
+                string upperCurrentPhrase = CurrentPhrase.ToUpper();
                 int remainingBlocks = Enumerable.Range(0, CurrentPhrase.Length)
-                    .Count(i => PuzzleState[i] != CurrentPhrase[i]);
+                    .Count(i => PuzzleState[i] != upperCurrentPhrase[i]);
 
                 Players[CurrentPlayer].Score += CurrentPrize * remainingBlocks;
                 gameOver = true;
