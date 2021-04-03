@@ -43,12 +43,17 @@ namespace FortuneWheel
             // 
             // button1
             // 
-            this.button1.BackColor = System.Drawing.Color.Gold;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.BackgroundImage = global::FortuneWheel.Properties.Resources.gold_button;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Bernard MT Condensed", 36F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(610, 682);
+            this.button1.Location = new System.Drawing.Point(598, 672);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(137, 54);
+            this.button1.Size = new System.Drawing.Size(161, 72);
             this.button1.TabIndex = 0;
             this.button1.Text = "SPIN";
             this.button1.UseVisualStyleBackColor = false;
