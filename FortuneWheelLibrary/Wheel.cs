@@ -45,11 +45,15 @@ namespace FortuneWheelLibrary
         [OperationContract]
         bool GameOver();
         [OperationContract]
+        void StartGame();
+        [OperationContract]
         Dictionary<char, bool> GetLetters();
         [OperationContract]
         string GetCurrentPhrase();
         [OperationContract(IsOneWay = true)]
         void LeaveGame();
+        [OperationContract]
+        bool GameStarted();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -207,6 +211,10 @@ namespace FortuneWheelLibrary
         public bool AddPlayer(string name, out Player p)
         {
             p = null;
+            if (gameStarted)
+            {
+                return false;
+            }
             if (callbacks.ContainsKey(name.ToUpper()) || Players.Count >= MAX_PLAYERS)
                 // User alias must be unique
                 return false;
@@ -240,8 +248,9 @@ namespace FortuneWheelLibrary
                 // Remove this client from receiving callbacks from the service
                 callbacks.Remove(id);
                 Players.Remove(Players.Find(e => e.Name.ToUpper() == id));
-                if (Players.Count <= 1)
+                if (Players.Count == 1 )
                 {
+                    CurrentPlayer = 0;
                     gameOver = true;
                     updateAllUsers();
                     return;
@@ -252,7 +261,6 @@ namespace FortuneWheelLibrary
                     Puzzles = new Dictionary<string, List<string>>();
                     Letters = new Dictionary<char, bool>();
                     gameStarted = false;
-                    gameOver = false;
                     CurrentPlayer = 0;
                     LoadWheelPrizes();
                     LoadLetters();
@@ -271,7 +279,7 @@ namespace FortuneWheelLibrary
         /// </summary>
         public void NextPlayer()
         {
-            if (CurrentPlayer + 1 >= Players.Count)
+            if (CurrentPlayer + 1 >= Players.Count || CurrentPlayer == Players.Count)
             {
                 CurrentPlayer = 0;
             }
@@ -388,6 +396,12 @@ namespace FortuneWheelLibrary
         {
             return gameOver;
         }
+
+        public void StartGame()
+        {
+            gameOver = false;
+            gameStarted = true;
+        }
         public Dictionary<char, bool> GetLetters()
         {
             return Letters;
@@ -396,6 +410,11 @@ namespace FortuneWheelLibrary
         public string GetCurrentPhrase()
         {
             return CurrentPhrase;
+        }
+
+        public bool GameStarted()
+        {
+            return gameStarted;
         }
 
     }

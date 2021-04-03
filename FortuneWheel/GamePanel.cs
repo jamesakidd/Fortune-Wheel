@@ -244,7 +244,11 @@ namespace FortuneWheel
                         {
                             int playerCount = wheel.GetAllPlayers().Length;
                             Player winner;
-                            if (playerCount == 1)
+                            if (playerCount == 0)
+                            {
+                                return;
+                            }
+                            else if (playerCount == 1)
                             {
                                 winner = wheel.GetAllPlayers()[0];
                             }
@@ -260,8 +264,9 @@ namespace FortuneWheel
                         {
                             MessageBox.Show($@"Error getting winner: {ex.Message}");
                         }
-
+                        wheel.LeaveGame();
                         Close();
+                        return;
                     }
                     // if the wheel is spinning do not update the current player
                     // otherwise the GUI will attempt to make additional threads and display errors
@@ -280,7 +285,7 @@ namespace FortuneWheel
                 }
             }
             else
-                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
+                this.BeginInvoke(new GuiUpdateDelegate(this.PlayersUpdated), new object[] { messages });
         }
     }
 }

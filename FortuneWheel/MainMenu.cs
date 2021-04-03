@@ -65,6 +65,7 @@ namespace FortuneWheel
                 if (GameStarted)
                 {
                     BeginInvoke(new GuiUpdateDelegate(gamePanel.PlayersUpdated), new object[] { messages });
+                    return;
                 }
                 // Otherwise update the UI
                 try
@@ -88,6 +89,10 @@ namespace FortuneWheel
         private void UpdatePlayers()
         {
             int readyPlayers = 0;
+            if (players.Count == 0)
+            {
+                return;
+            }
             // update the ui
             for (int i = 0; i <= playerLabels.Count; i++)
             {
@@ -103,6 +108,7 @@ namespace FortuneWheel
             if (readyPlayers >= 2 && readyPlayers == players.Count)
             {
                 GameStarted = true;
+                wheel.StartGame(); 
                 Hide();
                 gamePanel ??= new GamePanel(wheel, players, user);
                 gamePanel.Show();
@@ -148,6 +154,10 @@ namespace FortuneWheel
                     if (wheel.GetAllPlayers().Length == MAX_PLAYERS)
                     {
                         MessageBox.Show(@"ERROR: No room for any additional players");
+                    }
+                    else if (wheel.GameStarted())
+                    {
+                        MessageBox.Show(@"ERROR: Game in progress. Please try again later.");
                     }
                     else
                     {
