@@ -344,6 +344,10 @@ namespace FortuneWheelLibrary
                 Players[CurrentPlayer].Score += CurrentPrize * remainingBlocks;
                 gameOver = true;
             }
+            else
+            {
+                NextPlayer();
+            }
             updateAllUsers();
         }
 
