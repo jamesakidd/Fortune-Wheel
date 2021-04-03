@@ -29,6 +29,7 @@ namespace FortuneWheel
         private SoundPlayer winnerSound;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
+        private EndGameDialog endDialog;
 
         /*                                                                                                                            
            88               88              88b           d88                       88                                 88             
@@ -242,6 +243,10 @@ namespace FortuneWheel
                     {
                         try
                         {
+                            if (endDialog != null)
+                            {
+                                return;
+                            }
                             int playerCount = wheel.GetAllPlayers().Length;
                             Player winner;
                             if (playerCount == 0)
@@ -257,7 +262,7 @@ namespace FortuneWheel
                                 winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
                             }
                             winnerSound.Play();
-                            EndGameDialog endDialog = new EndGameDialog(wheel);
+                            endDialog = new EndGameDialog(wheel);
                             endDialog.ShowDialog(this);
                         }
                         catch (Exception ex)

@@ -232,7 +232,9 @@ namespace FortuneWheelLibrary
                 return true;
             }
         }
-
+        /// <summary>
+        /// Signals to the service that the player is leaving the game
+        /// </summary>
         public void LeaveGame()
         {
             ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
