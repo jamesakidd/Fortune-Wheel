@@ -50,11 +50,13 @@ namespace FortuneWheel
             InitializeComponent();
             LoadPlayerNameArray();
             LoadPlayerScoreArray();
+            GamePanel_Load(null,null);
             GetCurrentPlayer();
             MaximizeBox = false;
             wrongSound = new SoundPlayer(@"../../../wheel/wrong_buzzer.wav");
             rightSound = new SoundPlayer(@"../../../wheel/correct_tone.wav");
             winnerSound = new SoundPlayer(@"../../../wheel/winner.wav");
+            
         }
 
         private void GamePanel_Load(object sender, EventArgs e)
@@ -81,17 +83,18 @@ namespace FortuneWheel
         private void GetCurrentPlayer()
         {
             Player p = wheel.GetCurrentPlayer();
-            foreach (var play in players)
+            foreach (var label in playerLabels)
             {
-                if (play.Name == p.Name)
+                if (label.Text == p.Name)
                 {
-                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Red;
+                    label.ForeColor = Color.Red;
                 }
                 else
                 {
-                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Black;
+                    label.ForeColor = Color.Black;
                 }
             }
+           
             if (p.Name == user.Name)
             {
                 isUsersTurn = true;
@@ -202,9 +205,24 @@ namespace FortuneWheel
         /// </summary>
         private void UpdatePlayerScores()
         {
-            for (int i = 0; i < players.Count; i++)
+            int count = 0;
+            foreach (var label in playerLabels)
             {
-                playerScoreLabels[i].Text = players[i].Score.ToString("C0");
+                Player p = players.Find(pl => pl.Name.ToUpper() == label.Text.ToUpper());
+                if (p == null)
+                {
+                    label.Text = "Disconnected";
+                    players.Remove(p);
+                }
+                else if (label.Text == "Disconnected")
+                {
+                    // Do nothing
+                }
+                else
+                {
+                    playerScoreLabels[count].Text = p.Score.ToString("C0");
+                }
+                count++;
             }
         }
 
@@ -224,7 +242,16 @@ namespace FortuneWheel
                     {
                         try
                         {
-                            Player winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
+                            int playerCount = wheel.GetAllPlayers().Length;
+                            Player winner;
+                            if (playerCount == 1)
+                            {
+                                winner = wheel.GetAllPlayers()[0];
+                            }
+                            else
+                            {
+                                winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
+                            }
                             winnerSound.Play();
                             EndGameDialog endDialog = new EndGameDialog(wheel);
                             endDialog.ShowDialog(this);

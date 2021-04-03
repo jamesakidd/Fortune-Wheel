@@ -46,9 +46,10 @@ namespace FortuneWheelLibrary
         bool GameOver();
         [OperationContract]
         Dictionary<char, bool> GetLetters();
-
         [OperationContract]
         string GetCurrentPhrase();
+        [OperationContract(IsOneWay = true)]
+        void LeaveGame();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -87,6 +88,7 @@ namespace FortuneWheelLibrary
             Puzzles = new Dictionary<string, List<string>>();
             Letters = new Dictionary<char, bool>();
             gameStarted = false;
+            gameOver = false;
             CurrentPlayer = 0;
             LoadWheelPrizes();
             LoadLetters();
@@ -223,6 +225,48 @@ namespace FortuneWheelLibrary
             }
         }
 
+        public void LeaveGame()
+        {
+            ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
+
+            if (callbacks.ContainsValue(cb))
+            {
+                // Identify which client is currently calling this method
+                // - Get the index of the client within the callbacks collection
+                int i = callbacks.Values.ToList().IndexOf(cb);
+                // - Get the unique id of the client as stored in the collection
+                string id = callbacks.ElementAt(i).Key;
+
+                // Remove this client from receiving callbacks from the service
+                callbacks.Remove(id);
+                Players.Remove(Players.Find(e => e.Name.ToUpper() == id));
+                if (Players.Count <= 1)
+                {
+                    gameOver = true;
+                    updateAllUsers();
+                    gameOver = false;
+                    return;
+                }
+                if (Players.Count == 0)
+                {
+                    Players = new List<Player>();
+                    Puzzles = new Dictionary<string, List<string>>();
+                    Letters = new Dictionary<char, bool>();
+                    gameStarted = false;
+                    gameOver = false;
+                    CurrentPlayer = 0;
+                    LoadWheelPrizes();
+                    LoadLetters();
+                    LoadPuzzles();
+                    PickCurrentPuzzle();
+                    SetInitialPuzzleState();
+                    return;
+                }
+                CurrentPlayer = CurrentPlayer > 0 ? CurrentPlayer-- : CurrentPlayer;
+                updateAllUsers();
+            }
+        }
+
         /// <summary>
         /// Increments current player
         /// </summary>
@@ -292,6 +336,7 @@ namespace FortuneWheelLibrary
                 gameOver = true;
             }
             updateAllUsers();
+            gameOver = false;
         }
 
 
@@ -354,5 +399,6 @@ namespace FortuneWheelLibrary
         {
             return CurrentPhrase;
         }
+
     }
 }

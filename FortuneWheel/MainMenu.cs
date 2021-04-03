@@ -106,6 +106,7 @@ namespace FortuneWheel
                 Hide();
                 gamePanel ??= new GamePanel(wheel, players, user);
                 gamePanel.Show();
+                gamePanel.FormClosed += (_, _) => wheel.LeaveGame();
                 gamePanel.FormClosed += (_, _) => Close();
             }
             
