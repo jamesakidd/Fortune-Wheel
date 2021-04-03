@@ -5,9 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Media;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Threading;
 using FortuneWheelLibrary;
 
 /*
@@ -20,7 +18,6 @@ namespace FortuneWheel
 {
     public partial class PrizeWheel : Form
     {
-        Dispatcher thread = Dispatcher.CurrentDispatcher;
         private IWheel wheel;
         private LinkedList<Image> wheelStates = new();
         private SoundPlayer wheelSound;
@@ -173,8 +170,8 @@ namespace FortuneWheel
         {
 
             var rand = new Random(DateTime.Now.Millisecond);
-            var spins = rand.Next(30, 38);
-            double speed = rand.Next(8, 15);
+            var spins = rand.Next(22, 30);
+            double speed = rand.Next(41, 51);
             IEnumerator<Image> e = wheelStates.GetEnumerator();
 
             for (int i = 0; i < spins; i++)
@@ -200,7 +197,7 @@ namespace FortuneWheel
                     Thread.Sleep((int)Math.Ceiling(speed));
 
                 else
-                    Thread.Sleep((int)Math.Ceiling(speed *= 1.11));
+                    Thread.Sleep((int)Math.Ceiling(speed *= 1.08));
             }
 
             int wheelPosition = spins % 8;
