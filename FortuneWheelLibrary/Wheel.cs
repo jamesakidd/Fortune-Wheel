@@ -244,7 +244,6 @@ namespace FortuneWheelLibrary
                 {
                     gameOver = true;
                     updateAllUsers();
-                    gameOver = false;
                     return;
                 }
                 if (Players.Count == 0)
@@ -336,7 +335,6 @@ namespace FortuneWheelLibrary
                 gameOver = true;
             }
             updateAllUsers();
-            gameOver = false;
         }
 
 
