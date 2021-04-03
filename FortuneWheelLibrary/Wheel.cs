@@ -45,10 +45,15 @@ namespace FortuneWheelLibrary
         [OperationContract]
         bool GameOver();
         [OperationContract]
+        void StartGame();
+        [OperationContract]
         Dictionary<char, bool> GetLetters();
-
         [OperationContract]
         string GetCurrentPhrase();
+        [OperationContract(IsOneWay = true)]
+        void LeaveGame();
+        [OperationContract]
+        bool GameStarted();
     }
 
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
@@ -87,6 +92,7 @@ namespace FortuneWheelLibrary
             Puzzles = new Dictionary<string, List<string>>();
             Letters = new Dictionary<char, bool>();
             gameStarted = false;
+            gameOver = false;
             CurrentPlayer = 0;
             LoadWheelPrizes();
             LoadLetters();
@@ -205,6 +211,10 @@ namespace FortuneWheelLibrary
         public bool AddPlayer(string name, out Player p)
         {
             p = null;
+            if (gameStarted)
+            {
+                return false;
+            }
             if (callbacks.ContainsKey(name.ToUpper()) || Players.Count >= MAX_PLAYERS)
                 // User alias must be unique
                 return false;
@@ -222,13 +232,56 @@ namespace FortuneWheelLibrary
                 return true;
             }
         }
+        /// <summary>
+        /// Signals to the service that the player is leaving the game
+        /// </summary>
+        public void LeaveGame()
+        {
+            ICallback cb = OperationContext.Current.GetCallbackChannel<ICallback>();
+
+            if (callbacks.ContainsValue(cb))
+            {
+                // Identify which client is currently calling this method
+                // - Get the index of the client within the callbacks collection
+                int i = callbacks.Values.ToList().IndexOf(cb);
+                // - Get the unique id of the client as stored in the collection
+                string id = callbacks.ElementAt(i).Key;
+
+                // Remove this client from receiving callbacks from the service
+                callbacks.Remove(id);
+                Players.Remove(Players.Find(e => e.Name.ToUpper() == id));
+                if (Players.Count == 1 )
+                {
+                    CurrentPlayer = 0;
+                    gameOver = true;
+                    updateAllUsers();
+                    return;
+                }
+                if (Players.Count == 0)
+                {
+                    Players = new List<Player>();
+                    Puzzles = new Dictionary<string, List<string>>();
+                    Letters = new Dictionary<char, bool>();
+                    gameStarted = false;
+                    CurrentPlayer = 0;
+                    LoadWheelPrizes();
+                    LoadLetters();
+                    LoadPuzzles();
+                    PickCurrentPuzzle();
+                    SetInitialPuzzleState();
+                    return;
+                }
+                CurrentPlayer = CurrentPlayer > 0 ? CurrentPlayer-- : CurrentPlayer;
+                updateAllUsers();
+            }
+        }
 
         /// <summary>
         /// Increments current player
         /// </summary>
         public void NextPlayer()
         {
-            if (CurrentPlayer + 1 >= Players.Count)
+            if (CurrentPlayer + 1 >= Players.Count || CurrentPlayer == Players.Count)
             {
                 CurrentPlayer = 0;
             }
@@ -291,6 +344,10 @@ namespace FortuneWheelLibrary
                 Players[CurrentPlayer].Score += CurrentPrize * remainingBlocks;
                 gameOver = true;
             }
+            else
+            {
+                NextPlayer();
+            }
             updateAllUsers();
         }
 
@@ -345,6 +402,12 @@ namespace FortuneWheelLibrary
         {
             return gameOver;
         }
+
+        public void StartGame()
+        {
+            gameOver = false;
+            gameStarted = true;
+        }
         public Dictionary<char, bool> GetLetters()
         {
             return Letters;
@@ -354,5 +417,11 @@ namespace FortuneWheelLibrary
         {
             return CurrentPhrase;
         }
+
+        public bool GameStarted()
+        {
+            return gameStarted;
+        }
+
     }
 }

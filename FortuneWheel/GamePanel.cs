@@ -29,6 +29,7 @@ namespace FortuneWheel
         private SoundPlayer winnerSound;
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
+        private EndGameDialog endDialog;
 
         /*                                                                                                                            
            88               88              88b           d88                       88                                 88             
@@ -50,11 +51,13 @@ namespace FortuneWheel
             InitializeComponent();
             LoadPlayerNameArray();
             LoadPlayerScoreArray();
+            GamePanel_Load(null,null);
             GetCurrentPlayer();
             MaximizeBox = false;
             wrongSound = new SoundPlayer(@"../../../wheel/wrong_buzzer.wav");
             rightSound = new SoundPlayer(@"../../../wheel/correct_tone.wav");
             winnerSound = new SoundPlayer(@"../../../wheel/winner.wav");
+            
         }
 
         private void GamePanel_Load(object sender, EventArgs e)
@@ -81,17 +84,18 @@ namespace FortuneWheel
         private void GetCurrentPlayer()
         {
             Player p = wheel.GetCurrentPlayer();
-            foreach (var play in players)
+            foreach (var label in playerLabels)
             {
-                if (play.Name == p.Name)
+                if (label.Text == p.Name)
                 {
-                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Red;
+                    label.ForeColor = Color.Red;
                 }
                 else
                 {
-                    playerLabels[players.FindIndex(i => i.Name == play.Name)].ForeColor = Color.Black;
+                    label.ForeColor = Color.Black;
                 }
             }
+           
             if (p.Name == user.Name)
             {
                 isUsersTurn = true;
@@ -202,9 +206,24 @@ namespace FortuneWheel
         /// </summary>
         private void UpdatePlayerScores()
         {
-            for (int i = 0; i < players.Count; i++)
+            int count = 0;
+            foreach (var label in playerLabels)
             {
-                playerScoreLabels[i].Text = players[i].Score.ToString("C0");
+                Player p = players.Find(pl => pl.Name.ToUpper() == label.Text.ToUpper());
+                if (p == null)
+                {
+                    label.Text = "Disconnected";
+                    players.Remove(p);
+                }
+                else if (label.Text == "Disconnected")
+                {
+                    // Do nothing
+                }
+                else
+                {
+                    playerScoreLabels[count].Text = p.Score.ToString("C0");
+                }
+                count++;
             }
         }
 
@@ -224,17 +243,35 @@ namespace FortuneWheel
                     {
                         try
                         {
-                            Player winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
+                            if (endDialog != null)
+                            {
+                                return;
+                            }
+                            int playerCount = wheel.GetAllPlayers().Length;
+                            Player winner;
+                            if (playerCount == 0)
+                            {
+                                return;
+                            }
+                            else if (playerCount == 1)
+                            {
+                                winner = wheel.GetAllPlayers()[0];
+                            }
+                            else
+                            {
+                                winner = wheel.GetAllPlayers().OrderByDescending(p => p.Score).FirstOrDefault();
+                            }
                             winnerSound.Play();
-                            EndGameDialog endDialog = new EndGameDialog(wheel);
+                            endDialog = new EndGameDialog(wheel);
                             endDialog.ShowDialog(this);
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show($@"Error getting winner: {ex.Message}");
                         }
-
+                        wheel.LeaveGame();
                         Close();
+                        return;
                     }
                     // if the wheel is spinning do not update the current player
                     // otherwise the GUI will attempt to make additional threads and display errors
@@ -253,7 +290,7 @@ namespace FortuneWheel
                 }
             }
             else
-                this.BeginInvoke(new GuiUpdateDelegate(PlayersUpdated), new object[] { messages });
+                this.BeginInvoke(new GuiUpdateDelegate(this.PlayersUpdated), new object[] { messages });
         }
     }
 }

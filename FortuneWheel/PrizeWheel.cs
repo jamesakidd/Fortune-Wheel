@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Media;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using FortuneWheelLibrary;
@@ -39,22 +40,33 @@ namespace FortuneWheel
 
         public PrizeWheel(IWheel w)
         {
-            wheel = w;
-            InitializeComponent();
-            MaximizeBox = false;
-        }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            lbl_section2.Visible = false;
-
-            for (int i = 1; i <= 8; i++)
+            try
             {
-                wheelStates.AddLast(Image.FromFile($"../../../wheel/Slot {i} active.png"));
+
+                for (int i = 1; i <= 8; i++)
+                {
+                    wheelStates.AddLast(Image.FromFile($"../../../wheel/Slot {i} active.png"));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"ERROR loading wheel backgrounds: {ex.Message}");
             }
 
-            wheelSound = new SoundPlayer(@"../../../wheel/singlePeg.wav");
+            try
+            {
+                wheelSound = new SoundPlayer(@"../../../wheel/singlePeg.wav");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($@"ERROR loading wheel sound: {ex.Message}");
+            }
+
+            wheel = w;
+            InitializeComponent();
             LoadPrizeValues();
+            MaximizeBox = false;
         }
 
         /// <summary>
@@ -159,6 +171,7 @@ namespace FortuneWheel
         /// </summary>
         private void SpinWheel()
         {
+
             var rand = new Random(DateTime.Now.Millisecond);
             var spins = rand.Next(30, 38);
             double speed = rand.Next(8, 15);
@@ -166,6 +179,8 @@ namespace FortuneWheel
 
             for (int i = 0; i < spins; i++)
             {
+
+
                 if (e.MoveNext())
                 {
                     BackgroundImage = e.Current;
@@ -178,7 +193,9 @@ namespace FortuneWheel
                     BackgroundImage = e.Current;
                     Refresh();
                 }
+
                 wheelSound.Play();
+
                 if (speed >= 500)
                     Thread.Sleep((int)Math.Ceiling(speed));
 
@@ -187,9 +204,13 @@ namespace FortuneWheel
             }
 
             int wheelPosition = spins % 8;
-            wheel.SetPrize(wheelPosition == 0 ? wheel.GetPrizes()[wheelPosition] : wheel.GetPrizes()[wheelPosition - 1]);
+            wheel.SetPrize(wheelPosition == 0
+                ? wheel.GetPrizes()[wheelPosition]
+                : wheel.GetPrizes()[wheelPosition - 1]);
             Thread.Sleep(1200);
             e.Dispose();
+
+
         }
 
     }
