@@ -1,8 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using FortuneWheelLibrary;
+
+/*
+ * End game dialog for Fortune wheel game
+ * Authors: James Kidd & Anthony Merante
+ * Date: April 2, 2021
+ */
 
 namespace FortuneWheel
 {
