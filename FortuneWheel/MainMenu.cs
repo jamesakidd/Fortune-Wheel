@@ -108,12 +108,13 @@ namespace FortuneWheel
             if (readyPlayers >= 2 && readyPlayers == players.Count)
             {
                 GameStarted = true;
-                wheel.StartGame(); 
+                wheel.StartGame();
                 Hide();
                 gamePanel ??= new GamePanel(wheel, players, user);
                 gamePanel.Show();
                 gamePanel.FormClosed += (_, _) => wheel.LeaveGame();
                 gamePanel.FormClosed += (_, _) => Close();
+                gamePanel.PlayersUpdated(players.ToArray());
             }
             
         }
