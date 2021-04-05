@@ -271,7 +271,6 @@ namespace FortuneWheelLibrary
                     SetInitialPuzzleState();
                     return;
                 }
-                CurrentPlayer = CurrentPlayer > 0 ? CurrentPlayer-- : CurrentPlayer;
                 updateAllUsers();
             }
         }

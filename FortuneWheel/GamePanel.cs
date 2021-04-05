@@ -18,6 +18,7 @@ namespace FortuneWheel
 {
     public partial class GamePanel : Form, ICallback
     {
+        public bool Notify = false;
         private Dispatcher thread = Dispatcher.CurrentDispatcher;
         private IWheel wheel;
         private Player user;
@@ -30,6 +31,7 @@ namespace FortuneWheel
         private List<Label> playerLabels;
         private List<Label> playerScoreLabels;
         private EndGameDialog endDialog;
+        private PrizeWheel prizeWheel;
 
         /*                                                                                                                            
            88               88              88b           d88                       88                                 88             
@@ -52,7 +54,6 @@ namespace FortuneWheel
             LoadPlayerNameArray();
             LoadPlayerScoreArray();
             GamePanel_Load(null,null);
-            GetCurrentPlayer();
             MaximizeBox = false;
             wrongSound = new SoundPlayer(@"../../../wheel/wrong_buzzer.wav");
             rightSound = new SoundPlayer(@"../../../wheel/correct_tone.wav");
@@ -100,11 +101,13 @@ namespace FortuneWheel
             {
                 isUsersTurn = true;
                 isSpinning = true;
-                PrizeWheel pw = new PrizeWheel(wheel);
+                prizeWheel = new PrizeWheel(wheel);
+                prizeWheel.FormClosed += (_,_) => prizeWheel = null;
                 Hide();
-                pw.ShowDialog(this);
+                prizeWheel.ShowDialog(this);
                 lbl_CurrentPrize.Text = wheel.CurrentPrize().ToString("C0");
                 Show();
+
                 isSpinning = false;
             }
             else
