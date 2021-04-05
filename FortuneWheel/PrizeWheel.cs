@@ -19,9 +19,10 @@ namespace FortuneWheel
     public partial class PrizeWheel : Form
     {
         private IWheel wheel;
-        private LinkedList<Image> wheelStates = new();
+        private List<Image> wheelStates = new();
         private SoundPlayer wheelSound;
         private List<string> prizeValues;
+        private int index = 0;
 
 
         /*                                                                                                                            
@@ -43,7 +44,7 @@ namespace FortuneWheel
 
                 for (int i = 1; i <= 8; i++)
                 {
-                    wheelStates.AddLast(Image.FromFile($"../../../wheel/Slot {i} active.png"));
+                    wheelStates.Add(Image.FromFile($"../../../wheel/Slot {i} active.png"));
                 }
             }
             catch (Exception ex)
@@ -164,6 +165,21 @@ namespace FortuneWheel
         }
 
         /// <summary>
+        /// Changes the background image based on the global index
+        /// </summary>
+        private void ChangeWheel()
+        {
+            if (index + 1 >= wheelStates.Count)
+                index = 0;
+            else
+                index++;
+
+            Invoke(new Action(() => BackgroundImage = wheelStates[index]));
+            Refresh();
+        }
+
+
+        /// <summary>
         /// Moves the active prize a random number of times, playing a sound and changing the form Background for each move
         /// </summary>
         private void SpinWheel()
@@ -172,25 +188,10 @@ namespace FortuneWheel
             var rand = new Random(DateTime.Now.Millisecond);
             var spins = rand.Next(22, 30);
             double speed = rand.Next(41, 51);
-            IEnumerator<Image> e = wheelStates.GetEnumerator();
 
             for (int i = 0; i < spins; i++)
             {
-
-
-                if (e.MoveNext())
-                {
-                    BackgroundImage = e.Current;
-                    Refresh();
-                }
-                else
-                {
-                    e.Reset();
-                    e.MoveNext();
-                    BackgroundImage = e.Current;
-                    Refresh();
-                }
-
+                ChangeWheel();
                 wheelSound.Play();
 
                 if (speed >= 500)
@@ -200,15 +201,8 @@ namespace FortuneWheel
                     Thread.Sleep((int)Math.Ceiling(speed *= 1.08));
             }
 
-            int wheelPosition = spins % 8;
-            wheel.SetPrize(wheelPosition == 0
-                ? wheel.GetPrizes()[wheelPosition]
-                : wheel.GetPrizes()[wheelPosition - 1]);
+            wheel.SetPrize(wheel.GetPrizes()[index]);
             Thread.Sleep(1200);
-            e.Dispose();
-
-
         }
-
     }
 }
